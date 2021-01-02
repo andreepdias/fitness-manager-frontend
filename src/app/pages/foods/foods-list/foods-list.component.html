@@ -1,0 +1,58 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+</div>
+  <!-- Page content -->
+  <div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+      <div class="col">
+        <div class="card shadow">
+          <div class="card-header border-0">
+            <h3 class="mb-0">Foods</h3>
+          </div>
+          <div class="table-responsive">
+            
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Name</th>
+                  <th class="text-center" scope="col">Serving</th>
+                  <th class="text-center" scope="col">Carbohydrates</th>
+                  <th class="text-center" scope="col">Proteins</th>
+                  <th class="text-center" scope="col">Fats</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let resource of resources">
+                  <td scope="row"><p style="position: relative; top: 7px;">{{ resource.name }}</p></td>
+                  <td class="text-center">{{ resource.serving }}</td>
+                  <td class="text-center">{{ resource.carbohydrates }}</td>
+                  <td class="text-center">{{ resource.proteins }}</td>
+                  <td class="text-center">{{ resource.fats }}</td>
+                  <td class="text-right">
+                    <button pButton type="button" icon="pi pi-pencil" class="p-button-text p-button-rounded p-button-outlined p-button-sm p-button-info"></button>
+                    <button (click)="deleteResource(resource)" pButton type="button" icon="pi pi-trash" class="p-button-text p-button-rounded p-button-outlined p-button-sm p-button-danger"></button>
+                  </td>
+                </tr>
+                
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer py-4">
+            <nav aria-label="...">
+              <ul class="pagination justify-content-center mb-0">
+                <p-paginator
+                [rows]="paginatorConfig.size"
+                [totalRecords]="paginatorConfig.totalRecords"
+                [pageLinkSize]="paginatorConfig.pageLinkSize"
+                (onPageChange)="paginate($event)">
+                </p-paginator>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <p-toast></p-toast>
