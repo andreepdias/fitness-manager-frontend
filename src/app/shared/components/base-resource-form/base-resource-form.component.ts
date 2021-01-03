@@ -1,4 +1,4 @@
-import { Component, Directive, Injector, OnInit } from '@angular/core';
+import { AfterContentChecked, Component, Directive, Injector, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -7,12 +7,21 @@ import { BaseResourceModel } from '../../model/base-resource.model';
 import { BaseResourceService } from '../../service/base-resource.service';
 
 @Directive()
-export abstract class BaseFormListComponent<T extends BaseResourceModel> implements OnInit {
+export abstract class BaseResourceFormComponent<T extends BaseResourceModel> implements OnInit, AfterContentChecked {
 
+  pageTitle: string = '';
   currentAction: string = '';
   serverErrorMessages: string[] = [];
 
   form: FormGroup = new FormGroup({});
+  imaskConfig: any = {
+    mask: Number,
+    scale: 3,
+    thousandsSeparator: '',
+    padFractionalZeros: false,
+    normalizeZeros: true,
+    radix: ','
+  };
 
   formBuilder: FormBuilder;
   messageService: MessageService;
@@ -22,17 +31,26 @@ export abstract class BaseFormListComponent<T extends BaseResourceModel> impleme
   constructor(
     protected injector: Injector,
     protected service: BaseResourceService<T>,
+    protected resource: T,
     protected jsonToResourceFn: (json: any) => T
   ) {
     this.formBuilder = injector.get(FormBuilder);
     this.messageService = injector.get(MessageService);
     this.router = injector.get(Router);
     this.route = injector.get(ActivatedRoute);
+    this.resource = resource;
   }
+
+  /** INITAL SETUP */
 
   ngOnInit(): void {
     this.setCurrentAction();
     this.loadResource();
+    this.buildForm();
+  }
+  
+  ngAfterContentChecked(){
+    this.setPageTitle();
   }
 
   setCurrentAction(){
@@ -51,15 +69,21 @@ export abstract class BaseFormListComponent<T extends BaseResourceModel> impleme
     }
   }
 
+  protected abstract buildForm(): void;
+
+  protected abstract setPageTitle(): void;
+
+
+  /** REST CALLS RELATED */
+
   loadResource(){
     if(this.currentAction == 'edit'){
       this.route.params.pipe(
         switchMap(params => this.service.getById(+params['id']))
       ).subscribe(
-        success => this.actionsForSuccessLoad(),
-        error => this.actionsForFailedLoad()
+        success => this.actionsForSuccessLoad(success),
+        error => this.actionsForFailure(error)
       );
-      // service by id
     }
   }
 
@@ -79,16 +103,37 @@ export abstract class BaseFormListComponent<T extends BaseResourceModel> impleme
     );
       
   }
+
+  /** HANDLE RESPONSES */
   
   actionsForSuccess(success: any){
-    // toast success
-    // return list
+    const operation = this.currentAction == 'new' ? 'created' : 'edited';
+    this.messageService.add({severity: 'success', summary: 'Success', detail: success.name + ' was successfully ' + operation + '.'});
+    
+    this.navigateToParent();
+  }
+
+  actionsForSuccessLoad(success: any){
+    this.resource = success;
+    this.form.patchValue(success);
   }
 
   actionsForFailure(error: any){
+    console.log('error: ', error);
     this.serverErrorMessages = error.error.errors;
   }
 
+  /** UTIL METHODS */
 
-  protected buildForm: void;
+  navigateToParent(){
+    const parentUrl = this.route.snapshot.parent ? this.route.snapshot.parent.url[0].path : '';
+    if(parentUrl){
+      this.router.navigateByUrl(parentUrl);
+    }
+  }
+
+  unformatMask(value: string){
+    return value.replace(',', '.');
+  }
+
 }

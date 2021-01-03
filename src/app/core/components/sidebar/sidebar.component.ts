@@ -8,9 +8,9 @@ declare interface RouteInfo {
   class: string;
 }
 export const ROUTES_DIET: RouteInfo[] = [
-  { path: '/meals', title: 'Daily Meals',  icon: 'ni-satisfied text-orange', class: '' },
-  { path: '/foods', title: 'Foods',  icon: 'ni-world text-blue', class: '' },
-  { path: '/recipes', title: 'Recipes',  icon:'ni-book-bookmark text-yellow', class: '' },
+  { path: '/meals', title: 'Daily Meals',  icon: 'ni ni-satisfied text-blue', class: '' },
+  { path: '/foods', title: 'Foods',  icon: 'pi pi-apple text-red', class: '' },
+  { path: '/recipes', title: 'Recipes',  icon:'ni ni-book-bookmark text-yellow', class: '' },
 ];
 
 @Component({

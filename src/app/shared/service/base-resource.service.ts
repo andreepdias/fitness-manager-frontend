@@ -26,7 +26,7 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
   getAll(){
     return this.http.get(this.apiURL + '/all').pipe(
       catchError(this.handleError),
-      map(this.jsonToResources)
+      map(this.jsonToResources.bind(this))
     );
   }
 
@@ -34,22 +34,29 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
     const params = new HttpParams().set('page', String(page)).set('size', String(size));
     return this.http.get(this.apiURL, { params }).pipe(
       catchError(this.handleError),
-      map(this.jsonToResourcesPage)
+      map(this.jsonToResourcesPage.bind(this))
     );
   }
 
   getById(id: number){
-    return this.http.get(`${this.apiURL}/id`).pipe(
+    return this.http.get(`${this.apiURL}/${id}`).pipe(
       catchError(this.handleError),
-      map(this.jsonToResource)
+      map(this.jsonToResource.bind(this))
     )
   }
 
   create(resource: T){
     return this.http.post(this.apiURL, resource).pipe(
       catchError(this.handleError),
-      map(this.jsonToResource)
+      map(this.jsonToResource.bind(this))
     )
+  }
+
+  update(resource: T){
+    return this.http.post(`${this.apiURL}/${resource.id}`, resource).pipe(
+      catchError(this.handleError),
+      map(() => resource)
+    );
   }
 
   delete(resource: T){
@@ -75,7 +82,6 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
   }
 
   jsonToResourcesPage(jsonPage: any){
-    console.log('json array: ', jsonPage);
     const resources: T[] = [];
     jsonPage.content.forEach(
       (element: T) => resources.push(element)

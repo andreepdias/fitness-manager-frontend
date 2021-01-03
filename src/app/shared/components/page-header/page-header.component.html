@@ -1,0 +1,10 @@
+<div class="card-header border-0">
+    <div class="row">
+      <div class="col">
+        <h3 class="mb-0">{{ pageTitle }}</h3>
+      </div>
+      <div class="col" *ngIf="showButton">
+        <button [routerLink]="buttonLink" pButton type="button" [icon]="buttonIcon" [ngClass]="buttonClass" class="float-right" [label]="buttonText"></button>
+      </div>
+    </div>
+  </div>

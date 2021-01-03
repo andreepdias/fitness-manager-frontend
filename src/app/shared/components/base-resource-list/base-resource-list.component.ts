@@ -47,7 +47,6 @@ export abstract class BaseResourceListComponent<T extends BaseResourceModel> imp
   }
 
   actionsForSuccessLoadPage(success: any){
-    console.log(success);
     this.resources = success.content;
     this.paginatorConfig.totalRecords = success.totalElements;
   }

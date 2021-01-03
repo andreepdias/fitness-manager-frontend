@@ -1,0 +1,60 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+</div>
+  <!-- Page content -->
+  <div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+      <div class="col">
+        <div class="card shadow">
+          <app-page-header
+          page-title="{{pageTitle}}"
+          button-link="/foods/list">
+          </app-page-header>
+          <div class="card-body">
+
+            <form [formGroup]="form" (submit)="onSubmitForm()">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label for="name">Name</label><br>
+                            <input formControlName="name" class="form-control" type="text" />
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="name">Serving</label><br>
+                            <input [imask]="imaskConfig" formControlName="serving" class="form-control text-right" type="text" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="name">Carbohydrates</label>
+                            <input [imask]="imaskConfig" formControlName="carbohydrates" class="form-control text-right" type="text" />
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="name">Proteins</label>
+                            <input [imask]="imaskConfig" formControlName="proteins" class="form-control text-right" type="text" />
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="name">Fats</label>
+                            <input [imask]="imaskConfig" formControlName="fats" class="form-control text-right" type="text" />
+                        </div>
+                    </div>
+                </div>
+              <button pButton type="submit" class="p-button-success p-button-rounded" label="{{ currentAction == 'new' ? 'Create' : 'Edit' }}"></button>           
+            </form>
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <p-toast></p-toast>
