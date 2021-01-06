@@ -1,0 +1,70 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+</div>
+  <!-- Page content -->
+  <div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+      <div class="col">
+        <div class="card shadow">
+          <app-page-header
+          page-title="{{pageTitle}}"
+          button-link="/recipes/list">
+          </app-page-header>
+          <div class="card-body">
+
+            <form [formGroup]="form" (submit)="onSubmitForm()">
+                <div class="row">
+                    <div class="col-md-8">
+                      <div class="form-group">
+                        <label for="name">Name</label><br>
+                        <input formControlName="name" class="form-control" type="text" />
+                      </div>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-8">
+                    <label for="name">Select the ingredients</label><br>
+                    <p-multiSelect formControlName="foodsSelected" (onChange)="selectIngredient($event)" [style]="{'width':'100%'}" [options]="foods" optionValue="id" optionLabel="name"></p-multiSelect>
+                  </div>
+                </div>
+                
+                <div class="row mt-4" *ngIf="resource.ingredients.length">
+                  <div class="col-md-8">
+                    <label for="quantity">Set the quantity: </label><br>
+                    <table class="table align-items-center table-flush">
+                      <thead class="thead-light">
+                        <tr>
+                          <th scope="col">Name</th>
+                          <th class="text-center" scope="col">Serving</th>
+                          <th class="text-center" scope="col">Carbohydrates</th>
+                          <th class="text-center" scope="col">Proteins</th>
+                          <th class="text-center" scope="col">Fats</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let ingredient of resource.ingredients">
+                        <!-- <tr> -->
+                          <td scope="row"><p style="position: relative; top: 7px;">{{ ingredient.food.name }}</p></td>
+                          <td class="text-center">
+                            <div style="text-align: center">
+                              <input [id]="ingredient.food.id" (input)="changeQuantity($event)" [value]="ingredient.quantity" [imask]="imaskConfig" style="max-width: 100px; display: inline;" class="form-control text-right" type="text" />
+                            </div>
+                          </td>
+                          <td class="text-center">{{ formatMask(ingredient.food.carbohydrates) | imask:imaskConfig }}</td>
+                          <td class="text-center">{{ formatMask(ingredient.food.proteins) | imask:imaskConfig }}</td>
+                          <td class="text-center">{{ formatMask(ingredient.food.fats) | imask:imaskConfig }}</td>
+                        </tr>
+                        
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+              <button pButton type="submit" class="p-button-success p-button-rounded mt-4" label="{{ currentAction == 'new' ? 'Create' : 'Edit' }}"></button>           
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

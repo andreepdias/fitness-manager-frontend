@@ -16,6 +16,7 @@ import { FoodsFormComponent } from './foods-form/foods-form.component';
     SharedModule,
     FoodsRoutingModule,
     AuthenticationModule,
-  ]
+  ],
+  exports: []
 })
 export class FoodsModule { }

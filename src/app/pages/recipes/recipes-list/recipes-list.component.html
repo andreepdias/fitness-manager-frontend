@@ -7,8 +7,8 @@
       <div class="col">
         <div class="card shadow">
           <app-page-header
-          page-title="Foods listing"
-          button-link="/foods/new"
+          page-title="Recipes listing"
+          button-link="/recipes/new"
           button-text="New"
           button-icon="pi pi-plus"
           button-class="p-button-help p-button-rounded"
@@ -19,22 +19,14 @@
               <thead class="thead-light">
                 <tr>
                   <th scope="col">Name</th>
-                  <th class="text-center" scope="col">Serving</th>
-                  <th class="text-center" scope="col">Carbohydrates</th>
-                  <th class="text-center" scope="col">Proteins</th>
-                  <th class="text-center" scope="col">Fats</th>
                   <th scope="col"></th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let resource of resources">
                   <td scope="row"><p style="position: relative; top: 7px;">{{ resource.name }}</p></td>
-                  <td class="text-center">{{ resource.serving }}</td>
-                  <td class="text-center">{{ resource.carbohydrates }}</td>
-                  <td class="text-center">{{ resource.proteins }}</td>
-                  <td class="text-center">{{ resource.fats }}</td>
                   <td class="text-right">
-                    <button routerLink="/foods/{{ resource.id }}/edit" pButton type="button" icon="pi pi-pencil" class="p-button-text p-button-rounded p-button-outlined p-button-sm p-button-info"></button>
+                    <button routerLink="/recipes/{{ resource.id }}/edit" pButton type="button" icon="pi pi-pencil" class="p-button-text p-button-rounded p-button-outlined p-button-sm p-button-info"></button>
                     <button (click)="deleteResource(resource)" pButton type="button" icon="pi pi-trash" class="p-button-text p-button-rounded p-button-outlined p-button-sm p-button-danger"></button>
                   </td>
                 </tr>

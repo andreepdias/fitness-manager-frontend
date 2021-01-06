@@ -1,7 +1,7 @@
-import { AfterContentChecked, Component, Directive, Injector, OnInit } from '@angular/core';
+import { AfterContentChecked, Component, Directive, Injector, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { ToastrService } from 'ngx-toastr';
 import { switchMap } from 'rxjs/operators';
 import { BaseResourceModel } from '../../model/base-resource.model';
 import { BaseResourceService } from '../../service/base-resource.service';
@@ -24,20 +24,22 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
   };
 
   formBuilder: FormBuilder;
-  messageService: MessageService;
+  toastr: ToastrService;
   router: Router;
   route: ActivatedRoute;
+  ngZone: NgZone;
 
   constructor(
     protected injector: Injector,
     protected service: BaseResourceService<T>,
-    protected resource: T,
+    public resource: T,
     protected jsonToResourceFn: (json: any) => T
   ) {
     this.formBuilder = injector.get(FormBuilder);
-    this.messageService = injector.get(MessageService);
+    this.toastr = injector.get(ToastrService);
     this.router = injector.get(Router);
     this.route = injector.get(ActivatedRoute);
+    this.ngZone = injector.get(NgZone );
     this.resource = resource;
   }
 
@@ -108,8 +110,7 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
   
   actionsForSuccess(success: any){
     const operation = this.currentAction == 'new' ? 'created' : 'edited';
-    this.messageService.add({severity: 'success', summary: 'Success', detail: success.name + ' was successfully ' + operation + '.'});
-    
+    this.toastr.success('Success', success.name + ' was successfully ' + operation + '.');
     this.navigateToParent();
   }
 
@@ -132,8 +133,35 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
     }
   }
 
+  formatMask(value: string){
+    return value.replace('.', ',');
+  }
+
   unformatMask(value: string){
     return value.replace(',', '.');
+  }
+
+  setOnlyDigits(value: string){
+    const isDigit = (c: string) => ((c >= '0' && c <= '9') || c == '.');
+
+    let newValue = '';
+    for(let c of value){
+      if(isDigit(c)){
+        newValue += c;
+      }
+    }
+    return newValue;
+  }
+
+  fixPrecision(value: string, precision: number){
+    let indexDecimal = value.indexOf('.');
+
+    if(indexDecimal >= 0){
+      if(value.length > indexDecimal + 4){
+        return value.substr(0, indexDecimal + 4);
+      }
+    }
+    return value;
   }
 
 }

@@ -1,5 +1,5 @@
 import { Component, Directive, Injector, OnInit } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import { ToastrService } from 'ngx-toastr';
 import { BaseResourceModel } from '../../model/base-resource.model';
 import { BaseResourceService } from '../../service/base-resource.service';
 
@@ -15,13 +15,13 @@ export abstract class BaseResourceListComponent<T extends BaseResourceModel> imp
     currentPage: 0
   }
 
-  messageService: MessageService;
+  toastr: ToastrService;
 
   constructor(
     protected injector: Injector,
     protected service: BaseResourceService<T>,    
   ) {
-    this.messageService = injector.get(MessageService);
+    this.toastr = injector.get(ToastrService);
   }
 
   ngOnInit(): void {
@@ -36,6 +36,7 @@ export abstract class BaseResourceListComponent<T extends BaseResourceModel> imp
   }
 
   actionsForSuccessLoadAll(success: any){
+    console.log(success);
     this.resources = success;
   }
 
@@ -68,14 +69,13 @@ export abstract class BaseResourceListComponent<T extends BaseResourceModel> imp
   }
 
   actionsForSuccessDelete(success: any){
-    this.messageService.add({severity: 'success', summary: 'Deletion succeed', detail: success.name + ' was successfully deleted.'});
+    this.toastr.success(success.name + ' was successfully deleted.', 'Deletion succeed');
     this.loadPage(this.paginatorConfig.currentPage, this.paginatorConfig.size);
   }
   
   actionsForFailedDelete(error: any){
-    console.log(error.error.errors);
     error.error.errors.forEach((message: string) => {
-      this.messageService.add({severity: 'error', summary: 'Deletion failed', detail: message});
+      this.toastr.error(message, 'Deletion failed');
     });
   }
 

@@ -9,6 +9,7 @@ import { SharedModule } from '../shared/shared.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { FoodsModule } from '../pages/foods/foods.module';
+import { RecipesModule } from '../pages/recipes/recipes.module';
 
 
 
@@ -20,7 +21,8 @@ import { FoodsModule } from '../pages/foods/foods.module';
     RouterModule,
     HttpClientModule,
 
-    FoodsModule
+    FoodsModule,
+    RecipesModule
   ]
 })
 export class CoreModule { }

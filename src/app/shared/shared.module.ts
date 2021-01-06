@@ -8,10 +8,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { IMaskModule } from 'angular-imask';
 import { PaginatorModule } from "primeng/paginator";
 import { ButtonModule } from "primeng/button";
-import { ToastModule } from "primeng/toast";
-import { MessageService } from 'primeng/api';
+import { MultiSelectModule } from 'primeng/multiselect';
+
+
 import { PageHeaderComponent } from './components/page-header/page-header.component';
 import { RouterModule } from '@angular/router';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 
 @NgModule({
@@ -25,8 +27,9 @@ import { RouterModule } from '@angular/router';
     ReactiveFormsModule,
     PaginatorModule,
     ButtonModule,
-    ToastModule,
-    IMaskModule
+    IMaskModule,
+    ToastrModule.forRoot(),
+    MultiSelectModule
     
   ],
   exports: [
@@ -39,11 +42,12 @@ import { RouterModule } from '@angular/router';
     ReactiveFormsModule,
     PaginatorModule,
     ButtonModule,
-    ToastModule,
-    IMaskModule
+    IMaskModule,
+    ToastrModule,
+    MultiSelectModule
   ],
   providers: [
-    MessageService
+    ToastrService
   ]
 })
 export class SharedModule { }

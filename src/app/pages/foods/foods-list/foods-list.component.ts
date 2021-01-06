@@ -1,5 +1,4 @@
 import { Component, Injector, OnInit } from '@angular/core';
-import { MessageService } from 'primeng/api';
 import { BaseResourceListComponent } from 'src/app/shared/components/base-resource-list/base-resource-list.component';
 import { Food } from '../shared/food.model';
 import { FoodService } from '../shared/food.service';
