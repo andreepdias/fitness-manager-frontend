@@ -54,6 +54,7 @@
             "styles": [
               "src/styles.css",
               "src/assets/scss/argon.scss",
+              "src/assets/css/pe-icon-7-stroke.css",
               "src/assets/vendor/nucleo/css/nucleo.css",
               "src/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css",
               "node_modules/primeicons/primeicons.css",

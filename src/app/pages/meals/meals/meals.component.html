@@ -1,0 +1,168 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+</div>
+  <!-- Page content -->
+  <div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+      <div class="col">
+        <div class="card shadow">
+
+          <!-- PAGE HEADER -->
+          <app-page-header
+          page-title="Daily Meals"
+          [show-button]="false"
+          ></app-page-header>
+          <div class="card-body">
+            
+            <!-- DAYS NAGIVATIONS -->
+            <div class="row mb-5">
+              <div class="col-md">
+                <button (click)="choosePreviousDay()" pButton icon="pi pi-arrow-left" type="button" label="Previous day" class="p-button-text p-button-rounded p-button-info float-left"></button>
+              </div>
+              <div *ngIf="isTodaySelected()" class="col-md text-center">
+                <h1 style="margin-right: auto; position: absolute; padding-left: 200px;">Today</h1>
+                <button (click)="showModalDate()" style="position: absolute; margin-left: 40px;" pButton icon="pi pi-calendar" class="p-button-rounded p-button-sm"></button>
+              </div>
+              <div *ngIf="!isTodaySelected()" class="col-md text-center">
+                <h1 style="margin-right: auto; position: absolute; padding-left: 200px;">{{ date.toLocaleDateString("pt-BR") }}</h1>
+                <button (click)="showModalDate()" style="position: absolute; margin-left: 105px;" pButton icon="pi pi-calendar" class="p-button-rounded p-button-sm"></button>
+              </div>
+              <div class="col-md">
+                <button *ngIf="!isTodaySelected()" (click)="chooseNextDay()" pButton icon="pi pi-arrow-right" iconPos="right" type="button" label="Next day" class="p-button-text p-button-rounded p-button-info float-right"></button>
+              </div>
+            </div>
+
+            <!-- DAY WITHOUT MEAL -->
+            <div class="row" *ngIf="!dailyMeal.user">
+              <div class="col-md text-center">
+                <p style="font-size:larger;">You didn't register any meal this day. &nbsp; :(</p>
+                <button (click)="createDailyMeal()" pButton class="p-button-outlined p-button-info p-button-rounded mt-4 mb-3" label="Start the day"></button>
+              </div>
+            </div>
+
+            <!-- DAY WIH MEAL -->
+            <div class="row" *ngIf="dailyMeal.user">
+              <div class="col-md-1"></div>
+              <div class="col-md-10">
+
+                <!-- MEALS LOOP -->
+                <div class="card mb-5" *ngFor="let meal of dailyMeal.meals">
+
+                  <!-- MEAL TITLE -->
+                  <div class="card-header" style="padding-bottom: 0; padding-top: 10px; padding-left: 15px;">
+                    <div class="row">
+                      <div class="col-md">
+                        <h2>{{ meal.mealName.name }}</h2>
+                      </div>
+                      <!-- ADD MEAL BUTTON -->
+                      <div class="col-md">
+                        <button (click)="showModalMeal(meal, 'new')" pButton icon="pi pi-plus" class="p-button-rounded p-button-outlined p-button-info p-button-raised p-button-sm mb-2 float-right" label="Meal"></button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card-body" style="padding-bottom: 10px; padding-top: 5px;">
+
+                    <div class="row">
+                      <div class="col-md-4">
+                        <table class="table-responsive w-100 d-block d-md-table">
+                          <thead>
+                            <tr>
+                              <th style="padding: 0 75px 30px 0"></th>
+                              <th style="padding: 0 75px 30px 0; text-align: center;">&nbsp;</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let entry of meal.mealEntries">
+                              <td style="padding: 0 75px 30px 0">{{ entry.food ? entry.food.name : (entry.recipe ? entry.recipe.name : '') }}</td>
+                              <td style="padding: 0 75px 30px 0; text-align: center;">{{ entry.quantity }}g</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="col-md-4"></div>
+                      <div class="col-md-4">
+                        <table class="table-responsive w-100 d-block d-md-table">
+                          <thead>
+                            <tr>
+                              <th style="padding: 0 15px 15px 0; text-align: center;">carbs</th>
+                              <th style="padding: 0 15px 15px 0; text-align: center;">proteins</th>
+                              <th style="padding: 0 15px 15px 0; text-align: center;">fats</th>
+                              <th style="padding: 0 15px 15px 0; text-align: center;"></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let entry of meal.mealEntries">
+                              <td style="padding: 0 15px 15px 0; text-align: center;">{{ getEntryCarbs(entry) | imask:imaskConfig }}g</td>
+                              <td style="padding: 0 15px 15px 0; text-align: center;">{{ getEntryProteins(entry) | imask:imaskConfig }}g</td>
+                              <td style="padding: 0 15px 15px 0; text-align: center;">{{ getEntryFats(entry) | imask:imaskConfig }}g</td>
+                              <td style="padding: 0 15px 15px 0; text-align: right; align-items: right; justify-content: right; position: relative;;">
+                                <button (click)="showModalMeal(entry, 'edit')" pButton type="button" icon="pi pi-pencil" class="p-button-text p-button-rounded p-button-sm p-button-info"></button>
+                                <button (click)="deleteMealEntry(entry)" pButton type="button" icon="pi pi-times" class="p-button-text p-button-rounded p-button-sm p-button-danger"></button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <div class="col-md-1"></div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer py-4">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- MODAL PICK DATE -->
+<p-dialog [(visible)]="displayModalDate" [modal]="true" [draggable]="false">
+  <p-header>
+    Pick a date
+  </p-header>
+  <p-calendar (onSelect)="selectDate($event)" [(ngModel)]="selectedModalDate" [inline]="true"></p-calendar>
+</p-dialog>
+
+
+<!-- MODAL CREATE / EDIT -->
+<p-dialog [(visible)]="displayModalMeal" [modal]="true" [draggable]="false">
+  <p-header>
+    {{ modalCurrentAction == 'new' ? 'Add' : 'Edit' }} a meal &nbsp;
+  </p-header>
+
+  <form [formGroup]="modalForm" (submit)="onSubmitModalForm()">
+
+  <p-tabView [(activeIndex)]="tabIndexSelected">
+    <p-tabPanel header="Food">
+      <div class="new-section" style="display: flex; justify-content: center;">
+        <label for="name">Choose a food:</label>
+        <div class="new-break"></div>
+        <p-dropdown formControlName="food" [filter]="true" [panelStyle]="{'max-width':'160px'}" [options]="foods" appendTo="body" optionLabel="name"></p-dropdown>
+      </div>
+    </p-tabPanel>
+
+    <p-tabPanel header="Recipe">
+      <div class="new-section" style="display: flex; justify-content: center;">
+        <label for="name">Choose a recipe:</label>
+        <div class="new-break"></div>
+        <p-dropdown formControlName="recipe" [filter]="true" [panelStyle]="{'max-width':'160px'}" [options]="recipes" appendTo="body" optionLabel="name"></p-dropdown>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+  
+  <div class="form-group mb-0">
+    <div class="new-section" style="display: flex; justify-content: center;">
+      <label for="name">Quantity:</label>
+      <div class="new-break"></div>
+      <input formControlName="quantity" [imask]="imaskConfig" style="max-width: 75px;" class="form-control text-right" type="text" />
+    </div>
+  </div>
+  
+  <p-footer>
+    <button pButton type="submit" icon="pi pi-{{ modalCurrentAction == 'new' ? 'plus' : 'pencil' }}" class="p-button-rounded p-button-sm float-right mb-0 mt-2" label="{{ modalCurrentAction == 'new' ? 'Add' : 'Edit' }}"></button>
+  </p-footer>
+</form>
+</p-dialog>

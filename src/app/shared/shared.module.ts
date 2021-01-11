@@ -14,6 +14,11 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { PageHeaderComponent } from './components/page-header/page-header.component';
 import { RouterModule } from '@angular/router';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { DialogModule } from 'primeng/dialog';
+import { TabViewModule } from 'primeng/tabview';
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+
 
 
 @NgModule({
@@ -29,7 +34,11 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
     ButtonModule,
     IMaskModule,
     ToastrModule.forRoot(),
-    MultiSelectModule
+    MultiSelectModule,
+    DialogModule,
+    TabViewModule,
+    DropdownModule,
+    CalendarModule
     
   ],
   exports: [
@@ -44,7 +53,11 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
     ButtonModule,
     IMaskModule,
     ToastrModule,
-    MultiSelectModule
+    MultiSelectModule,
+    DialogModule,
+    TabViewModule,
+    DropdownModule,
+    CalendarModule
   ],
   providers: [
     ToastrService

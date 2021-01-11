@@ -1,0 +1,31 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+</div>
+  <!-- Page content -->
+  <div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+      <div class="col">
+        <div class="card shadow">
+          <app-page-header
+          page-title="{{pageTitle}}"
+          button-link="/tags/list">
+          </app-page-header>
+          <div class="card-body">
+
+            <form [formGroup]="form" (submit)="onSubmitForm()">
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <label for="name">Name</label><br>
+                    <input formControlName="name" class="form-control" type="text" />
+                  </div>
+                </div>
+              </div>
+              <button pButton type="submit" class="p-button-success p-button-rounded" label="{{ currentAction == 'new' ? 'Create' : 'Edit' }}"></button>           
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

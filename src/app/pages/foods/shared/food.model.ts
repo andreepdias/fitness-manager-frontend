@@ -1,5 +1,3 @@
-import { BaseResourceModel } from "src/app/shared/model/base-resource.model";
-
 export class Food {
     id: number = 0;
     name: string = '';
@@ -7,6 +5,19 @@ export class Food {
     carbohydrates: string = '';
     proteins: string = '';
     fats: string = '';
+
+    static getCarbs(food: Food){
+        return parseFloat(food.carbohydrates) / parseFloat(food.serving);
+    }
+
+    static getProteins(food: Food){
+        return parseFloat(food.proteins) / parseFloat(food.serving);
+    }
+
+    static getFats(food: Food){
+        return parseFloat(food.fats) / parseFloat(food.serving);
+    }
+    
 
     static fromJson(json: any){
         return Object.assign(new Food(), json);

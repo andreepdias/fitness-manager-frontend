@@ -10,6 +10,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { FoodsModule } from '../pages/foods/foods.module';
 import { RecipesModule } from '../pages/recipes/recipes.module';
+import { MealsModule } from '../pages/meals/meals.module';
+import { TagsModule } from '../pages/tags/tags.module';
+import { ExercisesModule } from '../pages/exercises/exercises.module';
+import { RoutinesModule } from '../pages/routines/routines.module';
 
 
 
@@ -22,7 +26,12 @@ import { RecipesModule } from '../pages/recipes/recipes.module';
     HttpClientModule,
 
     FoodsModule,
-    RecipesModule
+    RecipesModule,
+    MealsModule,
+
+    TagsModule,
+    ExercisesModule,
+    RoutinesModule,
   ]
 })
 export class CoreModule { }
