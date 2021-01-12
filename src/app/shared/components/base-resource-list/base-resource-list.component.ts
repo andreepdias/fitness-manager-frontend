@@ -9,7 +9,7 @@ export abstract class BaseResourceListComponent<T extends BaseResourceModel> imp
   resources: T[] = [];
 
   paginatorConfig = {
-    size: 10,
+    size: 9,
     totalRecords: 10,
     pageLinkSize: 3,
     currentPage: 0
@@ -49,6 +49,7 @@ export abstract class BaseResourceListComponent<T extends BaseResourceModel> imp
 
   actionsForSuccessLoadPage(success: any){
     this.resources = success.content;
+    console.log(this.resources);
     this.paginatorConfig.totalRecords = success.totalElements;
   }
 

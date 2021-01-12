@@ -200,6 +200,7 @@ export class MealsComponent implements OnInit {
 
   selectDate(event: any){
     this.displayModalDate = false;
+    this.date = event;
     this.loadMeal(event.getDate(), event.getMonth() + 1, event.getFullYear());
   }
 

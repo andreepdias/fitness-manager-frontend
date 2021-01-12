@@ -14,6 +14,7 @@ import { MealsModule } from '../pages/meals/meals.module';
 import { TagsModule } from '../pages/tags/tags.module';
 import { ExercisesModule } from '../pages/exercises/exercises.module';
 import { RoutinesModule } from '../pages/routines/routines.module';
+import { HomeModule } from '../pages/home/home.module';
 
 
 
@@ -32,6 +33,7 @@ import { RoutinesModule } from '../pages/routines/routines.module';
     TagsModule,
     ExercisesModule,
     RoutinesModule,
+    HomeModule
   ]
 })
 export class CoreModule { }

@@ -1,4 +1,4 @@
-<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+<div class="header bg-gradient-danger pb-4 pt-5 pt-md-8">
 </div>
   <!-- Page content -->
   <div class="container-fluid mt--7">
@@ -19,13 +19,13 @@
               <div class="col-md">
                 <button (click)="choosePreviousDay()" pButton icon="pi pi-arrow-left" type="button" label="Previous day" class="p-button-text p-button-rounded p-button-info float-left"></button>
               </div>
-              <div *ngIf="isTodaySelected()" class="col-md text-center">
-                <h1 style="margin-right: auto; position: absolute; padding-left: 200px;">Today</h1>
-                <button (click)="showModalDate()" style="position: absolute; margin-left: 40px;" pButton icon="pi pi-calendar" class="p-button-rounded p-button-sm"></button>
+              <div *ngIf="isTodaySelected()" class="col-md text-center mb-0" >
+                <h1 style="display: inline-block;">Today&nbsp;</h1>
+                <button style="vertical-align: top;" (click)="showModalDate()" pButton icon="pi pi-calendar" class="p-button-rounded p-button-sm mt-0"></button>
               </div>
               <div *ngIf="!isTodaySelected()" class="col-md text-center">
-                <h1 style="margin-right: auto; position: absolute; padding-left: 200px;">{{ date.toLocaleDateString("pt-BR") }}</h1>
-                <button (click)="showModalDate()" style="position: absolute; margin-left: 105px;" pButton icon="pi pi-calendar" class="p-button-rounded p-button-sm"></button>
+                <h1 style="display: inline-block;">{{ date.toLocaleDateString("pt-BR") }}&nbsp;</h1>
+                <button style="vertical-align: top;" (click)="showModalDate()" pButton icon="pi pi-calendar" class="p-button-rounded p-button-sm"></button>
               </div>
               <div class="col-md">
                 <button *ngIf="!isTodaySelected()" (click)="chooseNextDay()" pButton icon="pi pi-arrow-right" iconPos="right" type="button" label="Next day" class="p-button-text p-button-rounded p-button-info float-right"></button>

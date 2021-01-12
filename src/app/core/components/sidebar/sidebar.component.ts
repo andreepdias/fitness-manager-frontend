@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 declare interface RouteInfo {
   path: string;
@@ -32,7 +33,8 @@ export class SidebarComponent implements OnInit {
   isCollapsed = true;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private authService: AuthService
     ) { }
 
   ngOnInit() {
@@ -42,6 +44,10 @@ export class SidebarComponent implements OnInit {
     this.router.events.subscribe((event) => {
       this.isCollapsed = true;
    });
+  }
+
+  logout(){
+    this.authService.logout();
   }
 
 }

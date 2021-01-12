@@ -1,1 +1,188 @@
-<p>routines works!</p>
+<div class="header bg-gradient-danger pb-4 pt-5 pt-md-8">
+</div>
+  <!-- Page content -->
+  <div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+      <div class="col">
+        <div class="card shadow">
+
+          <!-- PAGE HEADER -->
+          <div *ngIf="routine.user">
+            <div class="card-header border-0">
+              <div class="row">
+                <div class="col-md-auto">
+                  <h3 class="mb-0">{{ routine.name }}</h3>
+                  <p class="mb-0">&nbsp; {{ routine.description }}</p>
+                </div>
+                <div class="col" >
+                  <button routerLink="/routines/{{ routine.id }}/edit" pButton icon="pi pi-pencil" class="p-button-rounded p-button-outlined p-button-sm float-left mr-1"></button>
+                  <button routerLink="/routines/new" pButton icon="pi pi-plus" class="p-button-rounded p-button-outlined p-button-sm float-left mr-1"></button>
+                  <button routerLink="/routines/list" pButton icon="pi pi-list" class="p-button-rounded p-button-sm float-left"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="!routine.user">
+            <div class="card-header border-0">
+              <div class="row">
+                <div class="col-md-auto mr-0">
+                  <h3 class="mb-0">Training Routine</h3>
+                </div>
+                <div class="col ml-0" >
+                  <button routerLink="/routines/list" pButton icon="pi pi-list" class="p-button-rounded p-button-sm float-left"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card-body">
+            
+            <div class="row">
+              <div class="col-md">
+
+                <div *ngIf="!routine.user">
+                  <div class="col-md text-center">
+                    <p style="font-size:larger;">Looks like you don't have any routine active. &nbsp; :(</p>
+                    <div class="row">
+                      <div class="col-md mt-4">
+                        <button (click)="createRoutine()" pButton class="p-button-outlined p-button-info p-button-rounded mt-4 mb-3" label="Create a new one"></button>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md">
+                        <button routerLink="/routines/list" pButton class="p-button-text p-button-info p-button-rounded mt-4 mb-3" label="Show my routines list"></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- SESSIONS LOOP -->
+                <div class="card mb-5" *ngFor="let session of routine.trainingSessions">
+
+                  <!-- SESSION TITLE -->
+                  <div class="card-header" style="padding-bottom: 0; padding-top: 10px; padding-left: 15px;">
+                    <div class="row">
+                      <div class="col-md">
+                        <h3 style="display: inline-block; vertical-align: bottom;">{{ session.description }}</h3>
+                        <button (click)="showModalEditSession(session)" pButton icon="pi pi-pencil" class="p-button-sm p-button-text p-button-rounded p-button-secondary" label=""></button>
+                      </div>
+                      <!-- ADD EXERCISE BUTTON -->
+                      <div class="col-md">
+                        <button (click)="showModalEditCreate(session, 'new')" pButton icon="pi pi-plus" class="p-button-rounded p-button-outlined p-button-info p-button-raised p-button-sm mb-2 float-right" label="Exercise"></button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card-body" style="padding-bottom: 10px; padding-top: 5px;"  *ngIf="session.sessionExercises.length > 0">
+
+                    <div class="row">
+                      <div class="col-md">
+                        <table class="table-responsive w-100 d-block d-md-table">
+                          <thead>
+                            <tr>
+                              <th style="padding: 0 0px 0 0"></th>
+                              <th style="padding: 0 0px 0 0; text-align: center;"></th>
+                              <th style="padding: 0 0px 0 0; text-align: center;">Reps</th>
+                              <th style="padding: 0 0px 0 0; text-align: center;">Rest</th>
+                              <th style="padding: 0 0px 0 0; text-align: center;"></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let exercise of session.sessionExercises">
+                              <td style="padding: 0 0px 0 0">{{ exercise.exercise.name }}</td>
+                              <td style="padding: 0 0px 0 0; text-align: center;">
+                                <span *ngFor="let tag of exercise.exercise.tags" [class]="getTagColor(tag.id)" class="badge badge-pill badge-primary">{{ tag.name }}</span>
+                              </td>
+                              <td style="padding: 0 0px 0 0; text-align: center;">{{ exercise.sets }}x{{ exercise.repetitions }}</td>
+                              <td style="padding: 0 0px 0 0; text-align: center;">{{ exercise.restInterval }} s</td>
+                              <td style="padding: 0 0 0 0; text-align: right; align-items: right; justify-content: right; position: relative;;">
+                                <button (click)="showModalEditCreate(exercise, 'edit')" pButton type="button" icon="pi pi-pencil" class="p-button-text p-button-rounded p-button-sm p-button-info"></button>
+                                <button (click)="deleteSessionExercise(exercise)" pButton type="button" icon="pi pi-times" class="p-button-text p-button-rounded p-button-sm p-button-danger"></button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer py-4">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- MODAL CREATE AND EDIT SESSION EXERCISE -->
+<p-dialog [(visible)]="displayModalCreateEdit" [modal]="true" [draggable]="false">
+  <p-header>
+    {{ modalCreateEditCurrentAction == 'new' ? 'Add' : 'Edit' }} a exercise &nbsp;
+  </p-header>
+
+  <form [formGroup]="modalCreateEditForm" (submit)="onSubmitModalCreateEditForm()">
+
+    <div class="form-group mb-3">
+      <div class="new-section" style="display: flex; justify-content: center;">
+        <label class="mb-0" for="name">Exercise:</label>
+        <div class="new-break"></div>
+        <p-dropdown formControlName="exercise" [filter]="true" [panelStyle]="{'max-width':'160px'}" [options]="exercises" appendTo="body" optionLabel="name"></p-dropdown>  
+      </div>
+    </div>
+
+    <div class="form-group mb-3">
+      <div class="new-section" style="display: flex; justify-content: center;">
+        <label class="mb-0" for="name">Sets:</label>
+        <div class="new-break"></div>
+        <input formControlName="sets" [imask]="imaskConfig" style="max-width: 75px;" class="form-control text-right" type="text" />
+      </div>
+    </div>
+
+    <div class="form-group mb-3">
+      <div class="new-section" style="display: flex; justify-content: center;">
+        <label class="mb-0" for="name">Repetitions:</label>
+        <div class="new-break"></div>
+        <input formControlName="repetitions" [imask]="imaskConfig" style="max-width: 75px;" class="form-control text-right" type="text" />
+      </div>
+    </div>
+
+    <div class="form-group mb-3">
+      <div class="new-section" style="display: flex; justify-content: center;">
+        <label class="mb-0" for="name">Rest Interval (s):</label>
+        <div class="new-break"></div>
+        <input formControlName="restInterval" [imask]="imaskConfig" style="max-width: 75px;" class="form-control text-right" type="text" />
+      </div>
+    </div>
+  
+  <p-footer>
+    <button pButton type="submit" icon="pi pi-{{ modalCreateEditCurrentAction == 'new' ? 'plus' : 'pencil' }}" class="p-button-rounded p-button-sm float-right mb-0 mt-2" label="{{ modalCreateEditCurrentAction == 'new' ? 'Add' : 'Edit' }}"></button>
+  </p-footer>
+</form>
+</p-dialog>
+
+
+
+<p-dialog [(visible)]="displayModalEditSession" [modal]="true" [draggable]="false">
+  <p-header>
+    Edit session &nbsp;
+  </p-header>
+
+  <form [formGroup]="modalEditSessionForm" (submit)="onSubmitModalEditSessionForm()">
+    <div class="form-group mb-3">
+      <div class="new-section" style="display: flex; justify-content: center;">
+        <label class="mb-0" for="name">Description:</label>
+        <div class="new-break"></div>
+        <input formControlName="description" style="" class="form-control" type="text" />
+      </div>
+    </div>
+  
+    <p-footer>
+      <button pButton type="submit" icon="pi pi-pencil" class="p-button-rounded p-button-sm float-right mb-0 mt-2" label="Edit"></button>
+    </p-footer>
+  </form>
+
+</p-dialog>

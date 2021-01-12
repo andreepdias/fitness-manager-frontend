@@ -18,6 +18,7 @@ import { DialogModule } from 'primeng/dialog';
 import { TabViewModule } from 'primeng/tabview';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
+import { CheckboxModule } from 'primeng/checkbox';
 
 
 
@@ -38,7 +39,8 @@ import { CalendarModule } from 'primeng/calendar';
     DialogModule,
     TabViewModule,
     DropdownModule,
-    CalendarModule
+    CalendarModule,
+    CheckboxModule
     
   ],
   exports: [
@@ -57,7 +59,8 @@ import { CalendarModule } from 'primeng/calendar';
     DialogModule,
     TabViewModule,
     DropdownModule,
-    CalendarModule
+    CalendarModule,
+    CheckboxModule
   ],
   providers: [
     ToastrService

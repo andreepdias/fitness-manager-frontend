@@ -1,0 +1,61 @@
+<div class="header bg-gradient-danger pb-4 pt-5 pt-md-8">
+</div>
+  <!-- Page content -->
+  <div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+      <div class="col">
+        <div class="card shadow">
+          <app-page-header
+          page-title="{{ pageTitle }}"
+          button-link="/routines/list"
+          button-text="List">
+          </app-page-header>
+          <div class="card-body">
+
+            <form [formGroup]="form" (submit)="onSubmitForm()">
+              
+              <div class="row">
+                
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label for="name">Name</label><br>
+                    <input formControlName="name" class="form-control" type="text" />
+                  </div>
+                </div>
+                
+                <div class="col-md-7">
+                  <div class="form-group">
+                    <label for="name">Description</label><br>
+                    <input formControlName="description" class="form-control" type="text" />
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row">
+
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label for="name">Times per Week</label><br>
+                    <p-dropdown [options]="weekFrequencies" optionValue="code" optionLabel="code" formControlName="weekFrequency" [style]="{'width':'100%'}"></p-dropdown>
+                  </div>
+                </div>
+
+                <div class="col-md-7">
+                  <div class="form-group">
+                    <label for="name">Current routine</label><br>
+                    <p-checkbox formControlName="isActiveRoutine" [binary]="true"></p-checkbox> This routine {{ currentAction == 'new' ? 'will be' : 'is' }} my active one.
+                  </div>
+                </div>
+
+              </div>
+              <button pButton type="submit" class="p-button-success p-button-rounded" label="{{ currentAction == 'new' ? 'Create' : 'Edit' }}"></button>           
+              <button *ngIf="currentAction == 'edit'" (click)="deleteResource()" pButton type="button" class="p-button-danger p-button-rounded float-right" label="Delete"></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

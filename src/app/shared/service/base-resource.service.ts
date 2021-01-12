@@ -46,6 +46,7 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
   }
 
   create(resource: T){
+    console.log(resource);
     return this.http.post(this.apiURL, resource).pipe(
       catchError(this.handleError),
       map(this.jsonToResource.bind(this))

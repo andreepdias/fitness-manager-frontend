@@ -7,7 +7,7 @@ import { RegisterComponent } from './pages/authentication/register/register.comp
 
 const routes: Routes = [
   { path: '', component: LayoutComponent, canActivate: [ AuthGuard ], children: [
-    { path: '', redirectTo: '/foods/list', pathMatch: 'full' }
+    { path: '', redirectTo: '/home', pathMatch: 'full' }
   ] }
 ];
 

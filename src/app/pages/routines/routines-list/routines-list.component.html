@@ -7,8 +7,8 @@
       <div class="col">
         <div class="card shadow">
           <app-page-header
-          page-title="Recipes listing"
-          button-link="/recipes/new"
+          page-title="Training Routines listings"
+          button-link="/routines/new"
           button-text="New"
           button-icon="pi pi-plus"
           button-class="p-button-help p-button-rounded"
@@ -19,20 +19,26 @@
               <thead class="thead-light">
                 <tr>
                   <th scope="col">Name</th>
+                  <th class="text-center" scope="col">Description</th>
+                  <th class="text-center" scope="col">Times per week</th>
                   <th scope="col"></th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let resource of resources">
+                <tr *ngFor="let resource of  resources">
                   <td scope="row"><p style="position: relative; top: 7px;">{{ resource.name }}</p></td>
+                  <td class="text-center" scope="row">{{ resource.description }}</td>
+                  <td class="text-center" scope="row">{{ resource.weekFrequency }}</td>
                   <td class="text-right">
-                    <button routerLink="/recipes/{{ resource.id }}/edit" pButton type="button" icon="pi pi-pencil" class="p-button-text p-button-rounded p-button-outlined p-button-sm p-button-info"></button>
+                    <button routerLink="/routines/{{ resource.id }}" pButton type="button" icon="pi pi-eye" class="p-button-text p-button-rounded p-button-outlined p-button-sm p-button-help"></button>
+                    <button routerLink="/routines/{{ resource.id }}/edit" pButton type="button" icon="pi pi-pencil" class="p-button-text p-button-rounded p-button-outlined p-button-sm p-button-info"></button>
                     <button (click)="deleteResource(resource)" pButton type="button" icon="pi pi-trash" class="p-button-text p-button-rounded p-button-outlined p-button-sm p-button-danger"></button>
                   </td>
                 </tr>
                 
               </tbody>
             </table>
+
           </div>
           <div class="card-footer py-4">
             <nav aria-label="...">

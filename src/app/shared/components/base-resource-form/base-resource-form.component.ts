@@ -109,8 +109,7 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
   /** HANDLE RESPONSES */
   
   actionsForSuccess(success: any){
-    const operation = this.currentAction == 'new' ? 'created' : 'edited';
-    this.toastr.success('Success', success.name + ' was successfully ' + operation + '.');
+    this.showSuccessToast(success);
     this.navigateToParent();
   }
 
@@ -124,11 +123,17 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
     this.serverErrorMessages = error.error.errors;
   }
 
+  showSuccessToast(success: any){
+    const operation = this.currentAction == 'new' ? 'created' : 'edited';
+    this.toastr.success('Success', success.name + ' was successfully ' + operation + '.');
+  }
+
   /** UTIL METHODS */
 
   navigateToParent(){
     const parentUrl = this.route.snapshot.parent ? this.route.snapshot.parent.url[0].path : '';
     if(parentUrl){
+      console.log(parentUrl);
       this.router.navigateByUrl(parentUrl);
     }
   }
