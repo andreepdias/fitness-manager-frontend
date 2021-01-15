@@ -1,0 +1,62 @@
+<div class="header bg-gradient-danger pb-4 pt-5 pt-md-8">
+</div>
+  <div class="container-fluid mt--7">
+    <div class="row">
+      <div class="col">
+        <div class="card shadow">
+          <app-page-header
+          page-title="{{pageTitle}}"
+          button-link="/meals">
+          </app-page-header>
+          <div class="card-body">
+
+            <form [formGroup]="form" (submit)="onSubmitForm()">
+
+              <div class="row">
+
+                <!-- MEALS NAME  -->
+                <div class="col-md">
+                  <label for="quantity">List of your meals </label>
+                  <button (click)="addNewMealName()" type="button" pButton icon="pi pi-plus" class="p-button-rounded p-button-sm float-right" label="Add new meal" ></button>
+                  <br>
+                  <table class="table align-items-center table-flush">
+                    <tbody>
+                      <tr *ngFor="let mealName of resource.mealsName">
+                        <!-- <tr> -->
+                          <td><div style="text-align: center"></div>
+                            <p style="display: inline;">{{ mealName.orderNumber }}.</p> &nbsp;
+                            <input (input)="changeMealName($event, mealName)" [id]="mealName.id" [value]="mealName.name" class="form-control" style="display: inline; max-width: 95%;" type="text" /> 
+                            <button (click)="removeMealName(mealName)" type="button" style="vertical-align: top;" pButton icon="pi pi-times" class="p-button-rounded p-button-sm p-button-danger p-button-text" label="" ></button>
+                        </td>
+                      </tr>
+                      
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+
+              <div class="row mt-4">
+                <div class="col-md">
+                  <div class="form-group">
+                    <div class="alert alert-primary" role="alert">
+                      <strong>Note:</strong> This changes will only update <u>future</u> daily meals.
+                  </div>
+                    &nbsp; <p-checkbox formControlName="shouldUpdateSelectedDate" [binary]="true"></p-checkbox> I want to rename the meals from the current date as well: {{ selectedDate.toLocaleDateString('pt-BR') }}.
+                  </div>
+                </div>
+              </div>
+
+              
+
+              <app-server-error-messages [server-error-messages]="serverErrorMessages"></app-server-error-messages>
+
+              <button pButton type="submit" class="p-button-success p-button-rounded" label="{{ currentAction == 'new' ? 'Create' : 'Edit' }}"></button>           
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

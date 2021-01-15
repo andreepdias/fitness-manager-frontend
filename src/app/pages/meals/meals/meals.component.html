@@ -7,12 +7,21 @@
       <div class="col">
         <div class="card shadow">
 
-          <!-- PAGE HEADER -->
-          <app-page-header
-          page-title="Daily Meals"
-          [show-button]="false"
-          ></app-page-header>
           <div class="card-body">
+
+            <!-- PAGE HEADER -->
+          <div>
+            <div class="card-header border-0">
+              <div class="row">
+                <div class="col-md-auto">
+                  <h3 style="vertical-align: center;" class="mb-0">Daily Meals</h3>
+                </div>
+                <div class="col" >
+                  <button routerLink="/meals/{{ userMealInfo.id }}" pButton icon="pi pi-pencil" class="p-button-rounded p-button-outlined p-button-sm float-left mr-1" label=""></button>
+                </div>
+              </div>
+            </div>
+          </div>
             
             <!-- DAYS NAGIVATIONS -->
             <div class="row mb-5">
@@ -52,57 +61,48 @@
                   <div class="card-header" style="padding-bottom: 0; padding-top: 10px; padding-left: 15px;">
                     <div class="row">
                       <div class="col-md">
-                        <h2>{{ meal.mealName.name }}</h2>
+                        <h2>{{ meal.mealName }}</h2>
                       </div>
                       <!-- ADD MEAL BUTTON -->
                       <div class="col-md">
-                        <button (click)="showModalMeal(meal, 'new')" pButton icon="pi pi-plus" class="p-button-rounded p-button-outlined p-button-info p-button-raised p-button-sm mb-2 float-right" label="Meal"></button>
+                        <button (click)="showModalMeal(meal, 'new')" pButton icon="pi pi-plus" class="p-button-rounded p-button-outlined p-button-info p-button-raised p-button-sm mb-2 float-right" label="Feed"></button>
                       </div>
                     </div>
                   </div>
 
-                  <div class="card-body" style="padding-bottom: 10px; padding-top: 5px;">
+                  <div class="card-body" style="padding-bottom: 10px; padding-top: 5px;" *ngIf="meal.mealEntries.length > 0">
 
                     <div class="row">
-                      <div class="col-md-4">
+                      <div class="col-md">
+                       
                         <table class="table-responsive w-100 d-block d-md-table">
                           <thead>
                             <tr>
-                              <th style="padding: 0 75px 30px 0"></th>
-                              <th style="padding: 0 75px 30px 0; text-align: center;">&nbsp;</th>
+                              <th style="padding: 0 15px 5px 0"></th>
+                              <th style="padding: 0 75px 5px 0; text-align: center;">&nbsp;</th>
+                              <th style="padding: 0 15px 5px 0; text-align: center;">carbs</th>
+                              <th style="padding: 0 15px 5px 0; text-align: center;">proteins</th>
+                              <th style="padding: 0 15px 5px 0; text-align: center;">fats</th>
+                              <th style="padding: 0 15px 5px 0; text-align: center;">calories</th>
+                              <th style="padding: 0 15px 5px 0; text-align: center;"></th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr *ngFor="let entry of meal.mealEntries">
-                              <td style="padding: 0 75px 30px 0">{{ entry.food ? entry.food.name : (entry.recipe ? entry.recipe.name : '') }}</td>
-                              <td style="padding: 0 75px 30px 0; text-align: center;">{{ entry.quantity }}g</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div class="col-md-4"></div>
-                      <div class="col-md-4">
-                        <table class="table-responsive w-100 d-block d-md-table">
-                          <thead>
-                            <tr>
-                              <th style="padding: 0 15px 15px 0; text-align: center;">carbs</th>
-                              <th style="padding: 0 15px 15px 0; text-align: center;">proteins</th>
-                              <th style="padding: 0 15px 15px 0; text-align: center;">fats</th>
-                              <th style="padding: 0 15px 15px 0; text-align: center;"></th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr *ngFor="let entry of meal.mealEntries">
-                              <td style="padding: 0 15px 15px 0; text-align: center;">{{ getEntryCarbs(entry) | imask:imaskConfig }}g</td>
-                              <td style="padding: 0 15px 15px 0; text-align: center;">{{ getEntryProteins(entry) | imask:imaskConfig }}g</td>
-                              <td style="padding: 0 15px 15px 0; text-align: center;">{{ getEntryFats(entry) | imask:imaskConfig }}g</td>
-                              <td style="padding: 0 15px 15px 0; text-align: right; align-items: right; justify-content: right; position: relative;;">
+                              <td style="padding: 0 15px 5px 0">{{ entry.food ? entry.food.name : (entry.recipe ? entry.recipe.name : '') }}</td>
+                              <td style="padding: 0 75px 5px 0; text-align: center;">{{ entry.quantity }} {{ getEntryUnit(entry) }} </td>
+                              <td style="padding: 0 15px 5px 0; text-align: center;">{{ getEntryCarbs(entry) | imask:imaskConfig }}g</td>
+                              <td style="padding: 0 15px 5px 0; text-align: center;">{{ getEntryProteins(entry) | imask:imaskConfig }}g</td>
+                              <td style="padding: 0 15px 5px 0; text-align: center;">{{ getEntryFats(entry) | imask:imaskConfig }}g</td>
+                              <td style="padding: 0 15px 5px 0; text-align: center;">{{ getEntryCalories(entry) | imask:imaskConfig }}g</td>
+                              <td style="padding: 0 15px 5px 0; text-align: right; align-items: right; justify-content: right; position: relative;;">
                                 <button (click)="showModalMeal(entry, 'edit')" pButton type="button" icon="pi pi-pencil" class="p-button-text p-button-rounded p-button-sm p-button-info"></button>
                                 <button (click)="deleteMealEntry(entry)" pButton type="button" icon="pi pi-times" class="p-button-text p-button-rounded p-button-sm p-button-danger"></button>
                               </td>
                             </tr>
                           </tbody>
                         </table>
+
                       </div>
                     </div>
                   </div>
@@ -130,7 +130,7 @@
 <!-- MODAL CREATE / EDIT -->
 <p-dialog [(visible)]="displayModalMeal" [modal]="true" [draggable]="false">
   <p-header>
-    {{ modalCurrentAction == 'new' ? 'Add' : 'Edit' }} a meal &nbsp;
+    {{ modalCurrentAction == 'new' ? 'Add to' : 'Edit' }} your meal &nbsp;
   </p-header>
 
   <form [formGroup]="modalForm" (submit)="onSubmitModalForm()">
@@ -141,6 +141,7 @@
         <label for="name">Choose a food:</label>
         <div class="new-break"></div>
         <p-dropdown formControlName="food" [filter]="true" [panelStyle]="{'max-width':'160px'}" [options]="foods" appendTo="body" optionLabel="name"></p-dropdown>
+        <app-form-field-error [form-control]="modalForm.controls.food"></app-form-field-error>
       </div>
     </p-tabPanel>
 
@@ -149,6 +150,7 @@
         <label for="name">Choose a recipe:</label>
         <div class="new-break"></div>
         <p-dropdown formControlName="recipe" [filter]="true" [panelStyle]="{'max-width':'160px'}" [options]="recipes" appendTo="body" optionLabel="name"></p-dropdown>
+        <app-form-field-error [form-control]="modalForm.controls.recipe"></app-form-field-error>
       </div>
     </p-tabPanel>
   </p-tabView>
@@ -158,6 +160,8 @@
       <label for="name">Quantity:</label>
       <div class="new-break"></div>
       <input formControlName="quantity" [imask]="imaskConfig" style="max-width: 75px;" class="form-control text-right" type="text" />
+      <div class="new-break"></div>
+      <app-form-field-error [form-control]="modalForm.controls.quantity"></app-form-field-error>
     </div>
   </div>
   

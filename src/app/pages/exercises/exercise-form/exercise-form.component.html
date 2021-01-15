@@ -13,20 +13,34 @@
           <div class="card-body">
 
             <form [formGroup]="form" (submit)="onSubmitForm()">
+              
+              
               <div class="row">
+                
+                <!-- NAME -->
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="name">Name</label><br>
                     <input formControlName="name" class="form-control" type="text" />
+                    <app-form-field-error [form-control]="form.controls.name"></app-form-field-error>
                   </div>
                 </div>
+
               </div>
+              
               <div class="row">
+
+                <!-- TAGS -->
                 <div class="col-md-6">
                     <p-multiSelect (onChange)="selectExerciseTags($event)" formControlName="tags" [style]="{'width':'100%'}" [options]="tags" optionValue="id" optionLabel="name"></p-multiSelect>
+                    <app-form-field-error [form-control]="form.controls.tags"></app-form-field-error>
                 </div>
               </div>
+
+              <app-server-error-messages [server-error-messages]="serverErrorMessages"></app-server-error-messages>
+
               <button pButton type="submit" class="p-button-success p-button-rounded mt-3" label="{{ currentAction == 'new' ? 'Create' : 'Edit' }}"></button>           
+
             </form>
           </div>
         </div>

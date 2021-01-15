@@ -16,6 +16,15 @@ export abstract class BaseResourceListComponent<T extends BaseResourceModel> imp
   }
 
   toastr: ToastrService;
+  
+  imaskConfig: any = {
+    mask: Number,
+    scale: 3,
+    thousandsSeparator: '',
+    padFractionalZeros: false,
+    normalizeZeros: true,
+    radix: ','
+  };
 
   constructor(
     protected injector: Injector,
@@ -36,7 +45,6 @@ export abstract class BaseResourceListComponent<T extends BaseResourceModel> imp
   }
 
   actionsForSuccessLoadAll(success: any){
-    console.log(success);
     this.resources = success;
   }
 
@@ -49,7 +57,6 @@ export abstract class BaseResourceListComponent<T extends BaseResourceModel> imp
 
   actionsForSuccessLoadPage(success: any){
     this.resources = success.content;
-    console.log(this.resources);
     this.paginatorConfig.totalRecords = success.totalElements;
   }
 

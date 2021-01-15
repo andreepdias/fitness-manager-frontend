@@ -126,35 +126,43 @@
 
   <form [formGroup]="modalCreateEditForm" (submit)="onSubmitModalCreateEditForm()">
 
+    <!-- EXERCISE -->
     <div class="form-group mb-3">
       <div class="new-section" style="display: flex; justify-content: center;">
         <label class="mb-0" for="name">Exercise:</label>
         <div class="new-break"></div>
         <p-dropdown formControlName="exercise" [filter]="true" [panelStyle]="{'max-width':'160px'}" [options]="exercises" appendTo="body" optionLabel="name"></p-dropdown>  
+        <app-form-field-error [form-control]="modalCreateEditForm.controls.exercise"></app-form-field-error>
       </div>
     </div>
 
+    <!-- SETS -->
     <div class="form-group mb-3">
       <div class="new-section" style="display: flex; justify-content: center;">
         <label class="mb-0" for="name">Sets:</label>
         <div class="new-break"></div>
         <input formControlName="sets" [imask]="imaskConfig" style="max-width: 75px;" class="form-control text-right" type="text" />
+        <app-form-field-error [form-control]="modalCreateEditForm.controls.sets"></app-form-field-error>
       </div>
     </div>
 
+    <!-- REPS -->
     <div class="form-group mb-3">
       <div class="new-section" style="display: flex; justify-content: center;">
         <label class="mb-0" for="name">Repetitions:</label>
         <div class="new-break"></div>
         <input formControlName="repetitions" [imask]="imaskConfig" style="max-width: 75px;" class="form-control text-right" type="text" />
+        <app-form-field-error [form-control]="modalCreateEditForm.controls.repetitions"></app-form-field-error>
       </div>
     </div>
 
+    <!-- REST -->
     <div class="form-group mb-3">
       <div class="new-section" style="display: flex; justify-content: center;">
         <label class="mb-0" for="name">Rest Interval (s):</label>
         <div class="new-break"></div>
         <input formControlName="restInterval" [imask]="imaskConfig" style="max-width: 75px;" class="form-control text-right" type="text" />
+        <app-form-field-error [form-control]="modalCreateEditForm.controls.restInterval"></app-form-field-error>
       </div>
     </div>
   
@@ -172,11 +180,14 @@
   </p-header>
 
   <form [formGroup]="modalEditSessionForm" (submit)="onSubmitModalEditSessionForm()">
+
+    <!-- DESCRIPTION -->
     <div class="form-group mb-3">
       <div class="new-section" style="display: flex; justify-content: center;">
         <label class="mb-0" for="name">Description:</label>
         <div class="new-break"></div>
-        <input formControlName="description" style="" class="form-control" type="text" />
+        <input formControlName="description" class="form-control" type="text" />
+        <app-form-field-error [form-control]="modalEditSessionForm.controls.description"></app-form-field-error>
       </div>
     </div>
   

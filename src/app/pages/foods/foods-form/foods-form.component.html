@@ -13,43 +13,82 @@
           <div class="card-body">
 
             <form [formGroup]="form" (submit)="onSubmitForm()">
+
                 <div class="row">
-                    <div class="col-md-8">
-                        <div class="form-group">
-                            <label for="name">Name</label><br>
-                            <input formControlName="name" class="form-control" type="text" />
-                          </div>
-                        </div>
-                        <div class="col-md-4">
-                          <div class="form-group">
-                            <label for="name">Serving</label><br>
-                            <input [imask]="imaskConfig" formControlName="serving" class="form-control text-right" type="text" />
-                          </div>
-                        </div>
+
+                  <!-- NAME -->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name">Name</label><br>
+                        <input formControlName="name" class="form-control" type="text" />
+                        <app-form-field-error [form-control]="form.controls.name"></app-form-field-error>
                       </div>
-                      <div class="row">
-                        <div class="col-md-4">
-                          <div class="form-group">
-                            <label for="name">Carbohydrates</label>
-                            <input [imask]="imaskConfig" formControlName="carbohydrates" class="form-control text-right" type="text" />
-                          </div>
-                        </div>
-                        <div class="col-md-4">
-                          <div class="form-group">
-                            <label for="name">Proteins</label>
-                            <input [imask]="imaskConfig" formControlName="proteins" class="form-control text-right" type="text" />
-                          </div>
-                        </div>
-                        <div class="col-md-4">
-                          <div class="form-group">
-                            <label for="name">Fats</label>
-                            <input [imask]="imaskConfig" formControlName="fats" class="form-control text-right" type="text" />
-                        </div>
+                    </div>
+
+                    <!-- SERVING -->
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label for="name">Serving</label><br>
+                        <input [imask]="imaskConfig" formControlName="serving" class="form-control text-right" type="text" />
+                        <app-form-field-error [form-control]="form.controls.serving"></app-form-field-error>
+                      </div>
+                    </div>
+
+                    <!-- UNIT -->
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label for="name">Unit</label><br>
+                        <p-dropdown [options]="units" optionValue="name" optionLabel="name" formControlName="unit" [style]="{'width':'100%'}"></p-dropdown>
+                        <app-form-field-error [form-control]="form.controls.serving"></app-form-field-error>
+                      </div>
                     </div>
                 </div>
-              <button pButton type="submit" class="p-button-success p-button-rounded" label="{{ currentAction == 'new' ? 'Create' : 'Edit' }}"></button>           
-            </form>
 
+                <div class="row">
+
+                  <!-- CARBS -->
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="name">Carbohydrates</label>
+                      <input [imask]="imaskConfig" formControlName="carbohydrates" class="form-control text-right" type="text" />
+                      <app-form-field-error [form-control]="form.controls.carbohydrates"></app-form-field-error>
+                    </div>
+                  </div>
+
+                  <!-- PROTEINS -->
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="name">Proteins</label>
+                      <input [imask]="imaskConfig" formControlName="proteins" class="form-control text-right" type="text" />
+                      <app-form-field-error [form-control]="form.controls.proteins"></app-form-field-error>
+                    </div>
+                  </div>
+
+                  <!-- FATS -->
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="name">Fats</label>
+                      <input [imask]="imaskConfig" formControlName="fats" class="form-control text-right" type="text" />
+                      <app-form-field-error [form-control]="form.controls.fats"></app-form-field-error>
+                   </div>
+                  </div>
+
+                  <!-- CALORIES -->
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="name">Calories</label>
+                      <input [imask]="imaskConfig" formControlName="calories" class="form-control text-right" type="text" />
+                      <app-form-field-error [form-control]="form.controls.calories"></app-form-field-error>
+                   </div>
+                  </div>
+
+                </div>
+
+                <app-server-error-messages [server-error-messages]="serverErrorMessages"></app-server-error-messages>
+              
+                <button pButton type="submit" class="p-button-success p-button-rounded" label="{{ currentAction == 'new' ? 'Create' : 'Edit' }}"></button>           
+
+            </form>
             
           </div>
         </div>

@@ -4,25 +4,43 @@ import { Ingredient } from "./ingredient.model";
 export class Recipe{
     id: number = 0;
     name: string = '';
+    serving: string = '';
+    unit: string = '';
     ingredients: Ingredient[] = [];
+
+
+    static get units(){
+        return [
+            { name: 'g' },
+            { name: 'ml' },
+            { name: 'un.' }
+        ];
+    }
 
     static getCarbs(recipe: Recipe){
         if(recipe.ingredients){
-            return recipe.ingredients.map(x => parseFloat(x.food.carbohydrates)).reduce((a, b) => a + b);
+            return recipe.ingredients.map(x => Food.getCarbs(x.food) * parseFloat(x.quantity) ).reduce((a, b) => a + b) / parseFloat(recipe.serving);
         }
         return 0.0;
     }
 
     static getProteins(recipe: Recipe){
         if(recipe.ingredients){
-            return recipe.ingredients.map(x => parseFloat(x.food.proteins)).reduce((a, b) => a + b);
+            return recipe.ingredients.map(x => Food.getProteins(x.food) * parseFloat(x.quantity) ).reduce((a, b) => a + b) / parseFloat(recipe.serving);
         }
         return 0.0;
     }
 
     static getFats(recipe: Recipe){
         if(recipe.ingredients){
-            return recipe.ingredients.map(x => parseFloat(x.food.fats)).reduce((a, b) => a + b);
+            return recipe.ingredients.map(x => Food.getFats(x.food) * parseFloat(x.quantity) ).reduce((a, b) => a + b) / parseFloat(recipe.serving);
+        }
+        return 0.0;
+    }
+
+    static getCalories(recipe: Recipe){
+        if(recipe.ingredients){
+            return recipe.ingredients.map(x => Food.getCalories(x.food) * parseFloat(x.quantity) ).reduce((a, b) => a + b) / parseFloat(recipe.serving);
         }
         return 0.0;
     }

@@ -19,12 +19,22 @@
               <thead class="thead-light">
                 <tr>
                   <th scope="col">Name</th>
+                  <th class="text-center" scope="col">Serving</th>
+                  <th class="text-center" scope="col">Carbohydrates</th>
+                  <th class="text-center" scope="col">Proteins</th>
+                  <th class="text-center" scope="col">Fats</th>
+                  <th class="text-center" scope="col">Calories</th>
                   <th scope="col"></th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let resource of resources">
                   <td scope="row"><p style="position: relative; top: 7px;">{{ resource.name }}</p></td>
+                  <td class="text-center">{{ resource.serving | imask:imaskConfig }} {{ resource.unit }}</td>
+                  <td class="text-center">{{ getCarbs(resource) | imask:imaskConfig }}</td>
+                  <td class="text-center">{{ getProteins(resource) | imask:imaskConfig }}</td>
+                  <td class="text-center">{{ getFats(resource) | imask:imaskConfig }}</td>
+                  <td class="text-center">{{ getCalories(resource) | imask:imaskConfig }}</td>
                   <td class="text-right">
                     <button routerLink="/recipes/{{ resource.id }}/edit" pButton type="button" icon="pi pi-pencil" class="p-button-text p-button-rounded p-button-outlined p-button-sm p-button-info"></button>
                     <button (click)="deleteResource(resource)" pButton type="button" icon="pi pi-trash" class="p-button-text p-button-rounded p-button-outlined p-button-sm p-button-danger"></button>

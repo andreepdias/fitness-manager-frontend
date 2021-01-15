@@ -9,6 +9,16 @@ export class MealEntry {
     food?: Food;
     recipe?: Recipe;
 
+    static getUnit(entry: MealEntry){
+        if(entry.food){
+            return entry.food.unit;
+        }
+        if(entry.recipe){
+            return entry.recipe.unit;
+        }
+        return '';
+    }
+
     static getCarbs(entry: MealEntry){
         if(entry.food){
             return Food.getCarbs(entry.food) * parseFloat(entry.quantity);
@@ -35,6 +45,16 @@ export class MealEntry {
         }
         if(entry.recipe){
             return Recipe.getFats(entry.recipe) * parseFloat(entry.quantity);
+        }
+        return 0;
+    }    
+
+    static getCalories(entry: MealEntry){
+        if(entry.food){
+            return Food.getCalories(entry.food) * parseFloat(entry.quantity);
+        }
+        if(entry.recipe){
+            return Recipe.getCalories(entry.recipe) * parseFloat(entry.quantity);
         }
         return 0;
     }

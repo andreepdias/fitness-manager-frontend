@@ -12,12 +12,15 @@ import { FoodService } from '../shared/food.service';
 })
 export class FoodsFormComponent extends BaseResourceFormComponent<Food> implements OnInit {
   
+  units: any = [];
 
   constructor(
     protected injector: Injector,
     protected service: FoodService,
   ) {
     super(injector, service, new Food(), Food.fromJson);
+
+    this.units = Food.units;
   }
 
   buildForm(){
@@ -25,10 +28,17 @@ export class FoodsFormComponent extends BaseResourceFormComponent<Food> implemen
       id: [ null ],
       name: [ null, [ Validators.required ] ],
       serving: [ null, [ Validators.required ] ],
+      unit: [ null, [ Validators.required ] ],
       carbohydrates: [ null, [ Validators.required ] ],
       proteins: [ null, [ Validators.required ] ],
       fats: [ null, [ Validators.required ] ],
+      calories: [ null, [ Validators.required ] ],
     })
+  }
+
+  ngOnInit(){
+    super.ngOnInit();
+    this.form.controls.unit.setValue(this.units[0].name);
   }
 
   protected setPageTitle(){
@@ -54,6 +64,7 @@ export class FoodsFormComponent extends BaseResourceFormComponent<Food> implemen
     this.form.value.carbohydrates = this.unformatMask(this.form.value.carbohydrates);
     this.form.value.proteins = this.unformatMask(this.form.value.proteins);
     this.form.value.fats = this.unformatMask(this.form.value.fats);
+    this.form.value.calories = this.unformatMask(this.form.value.calories);
   }
 
 }

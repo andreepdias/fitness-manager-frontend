@@ -1,8 +1,6 @@
 <div class="header bg-gradient-danger pb-4 pt-5 pt-md-8">
 </div>
-  <!-- Page content -->
   <div class="container-fluid mt--7">
-    <!-- Table -->
     <div class="row">
       <div class="col">
         <div class="card shadow">
@@ -13,14 +11,22 @@
           <div class="card-body">
 
             <form [formGroup]="form" (submit)="onSubmitForm()">
+
               <div class="row">
+
+                <!-- NAME -->
                 <div class="col-md-8">
                   <div class="form-group">
                     <label for="name">Name</label><br>
                     <input formControlName="name" class="form-control" type="text" />
+                    <app-form-field-error [form-control]="form.controls.name"></app-form-field-error>
                   </div>
                 </div>
+
               </div>
+
+              <app-server-error-messages [server-error-messages]="serverErrorMessages"></app-server-error-messages>
+
               <button pButton type="submit" class="p-button-success p-button-rounded" label="{{ currentAction == 'new' ? 'Create' : 'Edit' }}"></button>           
             </form>
           </div>

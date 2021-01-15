@@ -14,6 +14,7 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
   serverErrorMessages: string[] = [];
 
   form: FormGroup = new FormGroup({});
+  
   imaskConfig: any = {
     mask: Number,
     scale: 3,
@@ -102,8 +103,7 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
     this.service.update(resource).subscribe(
       success => this.actionsForSuccess(success),
       error => this.actionsForFailure(error)
-    );
-      
+    );      
   }
 
   /** HANDLE RESPONSES */

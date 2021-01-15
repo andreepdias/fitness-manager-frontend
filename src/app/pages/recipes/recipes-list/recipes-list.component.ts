@@ -9,12 +9,41 @@ import { RecipesService } from '../shared/recipes.service';
   styleUrls: ['./recipes-list.component.css']
 })
 export class RecipesListComponent extends BaseResourceListComponent<Recipe> implements OnInit {
+  
+  imaskConfig: any = {
+    mask: Number,
+    scale: 3,
+    thousandsSeparator: '',
+    padFractionalZeros: false,
+    normalizeZeros: true,
+    radix: ','
+  };
 
   constructor(
     protected injector: Injector,
     protected service: RecipesService
   ) {
     super(injector, service);
+  }
+
+  getCarbs(recipe: Recipe){
+    const value = Recipe.getCarbs(recipe) * parseFloat(recipe.serving);
+    return String(value);
+  }
+
+  getProteins(recipe: Recipe){
+    const value = Recipe.getProteins(recipe) * parseFloat(recipe.serving);
+    return String(value);
+  }
+
+  getFats(recipe: Recipe){
+    const value = Recipe.getFats(recipe) * parseFloat(recipe.serving);
+    return String(value);
+  }
+
+  getCalories(recipe: Recipe){
+    const value = Recipe.getCalories(recipe) * parseFloat(recipe.serving);
+    return String(value);
   }
 
 }

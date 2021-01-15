@@ -3,6 +3,7 @@ import { MealName } from "./meal-name.model";
 
 export class Meal {
     id: number = 0;
-    mealName: MealName = new MealName();
+    mealName: string = '';
+    orderNumber: number = 0;
     mealEntries: MealEntry[] = [];
 }

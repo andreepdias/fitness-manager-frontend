@@ -13,52 +13,86 @@
           <div class="card-body">
 
             <form [formGroup]="form" (submit)="onSubmitForm()">
-                <div class="row">
-                    <div class="col-md-8">
-                      <div class="form-group">
-                        <label for="name">Name</label><br>
-                        <input formControlName="name" class="form-control" type="text" />
-                      </div>
-                    </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-8">
-                    <label for="name">Select the ingredients</label><br>
-                    <p-multiSelect formControlName="foodsSelected" (onChange)="selectIngredient($event)" [style]="{'width':'100%'}" [options]="foods" optionValue="id" optionLabel="name"></p-multiSelect>
+
+              <div class="row">
+
+                <!-- NAME -->
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="name">Name</label><br>
+                    <input formControlName="name" class="form-control" type="text" />
+                    <app-form-field-error [form-control]="form.controls.name"></app-form-field-error>
                   </div>
                 </div>
+
+                <!-- SERVING -->
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="name">Serving</label><br>
+                    <input [imask]="imaskConfig" formControlName="serving" class="form-control text-right" type="text" />
+                    <app-form-field-error [form-control]="form.controls.serving"></app-form-field-error>
+                  </div>
+                </div>
+
+                <!-- UNIT -->
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="name">Unit</label><br>
+                    <p-dropdown [options]="units" optionValue="name" optionLabel="name" formControlName="unit" [style]="{'width':'100%'}"></p-dropdown>
+                    <app-form-field-error [form-control]="form.controls.serving"></app-form-field-error>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row">
+
+                <!-- FOODS -->
+                <div class="col-md-6">
+                  <label for="name">Select the ingredients</label><br>
+                  <p-multiSelect formControlName="foodsSelected" (onChange)="selectIngredient($event)" [style]="{'width':'100%'}" [options]="foods" optionValue="id" optionLabel="name"></p-multiSelect>
+                  <app-form-field-error [form-control]="form.controls.foodsSelected"></app-form-field-error>
+                </div>
+
+              </div>
                 
-                <div class="row mt-4" *ngIf="resource.ingredients.length">
-                  <div class="col-md-8">
-                    <label for="quantity">Set the quantity: </label><br>
-                    <table class="table align-items-center table-flush">
-                      <thead class="thead-light">
-                        <tr>
-                          <th scope="col">Name</th>
-                          <th class="text-center" scope="col">Serving</th>
-                          <th class="text-center" scope="col">Carbohydrates</th>
-                          <th class="text-center" scope="col">Proteins</th>
-                          <th class="text-center" scope="col">Fats</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let ingredient of resource.ingredients">
-                        <!-- <tr> -->
-                          <td scope="row"><p style="position: relative; top: 7px;">{{ ingredient.food.name }}</p></td>
-                          <td class="text-center">
-                            <div style="text-align: center">
-                              <input [id]="ingredient.food.id" (input)="changeQuantity($event)" [value]="ingredient.quantity" [imask]="imaskConfig" style="max-width: 100px; display: inline;" class="form-control text-right" type="text" />
-                            </div>
-                          </td>
-                          <td class="text-center">{{ formatMask(ingredient.food.carbohydrates) | imask:imaskConfig }}</td>
-                          <td class="text-center">{{ formatMask(ingredient.food.proteins) | imask:imaskConfig }}</td>
-                          <td class="text-center">{{ formatMask(ingredient.food.fats) | imask:imaskConfig }}</td>
-                        </tr>
-                        
-                      </tbody>
-                    </table>
-                  </div>
+              <div class="row mt-4" *ngIf="resource.ingredients.length">
+
+                <!-- INGREDIENTS  -->
+                <div class="col-md">
+                  <label for="quantity">Set the quantity: </label><br>
+                  <table class="table align-items-center table-flush">
+                    <!-- <thead class="thead-light">
+                      <tr>
+                        <th scope="col">Name</th>
+                        <th class="text-center" scope="col">Quantity</th>
+                        <th class="text-center" scope="col">Carbohydrates</th>
+                        <th class="text-center" scope="col">Proteins</th>
+                        <th class="text-center" scope="col">Fats</th>
+                        <th class="text-center" scope="col">Calories</th>
+                      </tr>
+                    </thead> -->
+                    <tbody>
+                      <tr *ngFor="let ingredient of resource.ingredients">
+                      <!-- <tr> -->
+                        <td scope="row"><p style="position: relative; top: 7px;">{{ ingredient.food.name }}</p></td>
+                        <td class="text-center">
+                          <div style="text-align: center">
+                            <input [id]="ingredient.food.id" (input)="changeQuantity($event)" [value]="ingredient.quantity" [imask]="imaskConfig" style="max-width: 100px; display: inline;" class="form-control text-right" type="text" /> {{ ingredient.food.unit }}
+                          </div>
+                        </td>
+                        <td class="text-center">{{ getIngredientCarbs(ingredient) | imask:imaskConfig }}g carbs</td>
+                        <td class="text-center">{{ getIngredientProteins(ingredient) | imask:imaskConfig }}g proteins</td>
+                        <td class="text-center">{{ getIngredientFats(ingredient) | imask:imaskConfig }}g fats</td>
+                        <td class="text-center">{{ getIngredientProteins(ingredient) | imask:imaskConfig }} calories</td>
+                      </tr>
+                      
+                    </tbody>
+                  </table>
                 </div>
+              </div>
+
+                <app-server-error-messages [server-error-messages]="serverErrorMessages"></app-server-error-messages>
 
               <button pButton type="submit" class="p-button-success p-button-rounded mt-4" label="{{ currentAction == 'new' ? 'Create' : 'Edit' }}"></button>           
             </form>

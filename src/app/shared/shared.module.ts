@@ -19,11 +19,13 @@ import { TabViewModule } from 'primeng/tabview';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
+import { FormFieldErrorComponent } from './components/form-field-error/form-field-error.component';
+import { ServerErrorMessagesComponent } from './components/server-error-messages/server-error-messages.component';
 
 
 
 @NgModule({
-  declarations: [PageHeaderComponent],
+  declarations: [PageHeaderComponent, FormFieldErrorComponent, ServerErrorMessagesComponent],
   imports: [
     CommonModule,
     BrowserModule,
@@ -45,6 +47,8 @@ import { CheckboxModule } from 'primeng/checkbox';
   ],
   exports: [
     PageHeaderComponent,
+    FormFieldErrorComponent,
+    ServerErrorMessagesComponent,
     
     BrowserModule,
     RouterModule,

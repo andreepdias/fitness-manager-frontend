@@ -17,17 +17,21 @@
               
               <div class="row">
                 
+                <!-- NAME -->
                 <div class="col-md-5">
                   <div class="form-group">
                     <label for="name">Name</label><br>
                     <input formControlName="name" class="form-control" type="text" />
+                    <app-form-field-error [form-control]="form.controls.name"></app-form-field-error>
                   </div>
                 </div>
                 
+                <!-- DESCRIPTION -->
                 <div class="col-md-7">
                   <div class="form-group">
                     <label for="name">Description</label><br>
                     <input formControlName="description" class="form-control" type="text" />
+                    <app-form-field-error [form-control]="form.controls.description"></app-form-field-error>
                   </div>
                 </div>
 
@@ -35,21 +39,28 @@
 
               <div class="row">
 
+                <!-- WEEK FREQUENCY -->
                 <div class="col-md-5">
                   <div class="form-group">
                     <label for="name">Times per Week</label><br>
                     <p-dropdown [options]="weekFrequencies" optionValue="code" optionLabel="code" formControlName="weekFrequency" [style]="{'width':'100%'}"></p-dropdown>
+                    <app-form-field-error [form-control]="form.controls.weekFrequency"></app-form-field-error>
                   </div>
                 </div>
 
+                <!-- IS ACTIVE ROUTINE -->
                 <div class="col-md-7">
                   <div class="form-group">
-                    <label for="name">Current routine</label><br>
+                    <label for="name">Current routine?</label><br>
                     <p-checkbox formControlName="isActiveRoutine" [binary]="true"></p-checkbox> This routine {{ currentAction == 'new' ? 'will be' : 'is' }} my active one.
+                    <app-form-field-error [form-control]="form.controls.isActiveRoutine"></app-form-field-error>
                   </div>
                 </div>
 
               </div>
+              
+              <app-server-error-messages [server-error-messages]="serverErrorMessages"></app-server-error-messages>
+
               <button pButton type="submit" class="p-button-success p-button-rounded" label="{{ currentAction == 'new' ? 'Create' : 'Edit' }}"></button>           
               <button *ngIf="currentAction == 'edit'" (click)="deleteResource()" pButton type="button" class="p-button-danger p-button-rounded float-right" label="Delete"></button>
             </form>

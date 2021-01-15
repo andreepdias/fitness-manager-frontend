@@ -15,16 +15,20 @@ export class RecipesFormComponent extends BaseResourceFormComponent<Recipe> impl
 
   foods: Food[] = [];
 
+  units: any;
+
   constructor(
     protected injector: Injector,
     protected service: RecipesService
   ) {
     super(injector, service, new Recipe(), Recipe.fromJSON);
+    this.units = Recipe.units;
   }
 
   ngOnInit(){
     super.ngOnInit();
     this.loadFoods();
+    this.form.controls.unit.setValue(this.units[2].name);
   }
 
 
@@ -33,6 +37,8 @@ export class RecipesFormComponent extends BaseResourceFormComponent<Recipe> impl
       id: [ null ],
       name: [ null, [ Validators.required ] ],
       foodsSelected: [ [], [ Validators.required ] ],
+      serving: [ null, [ Validators.required ] ],
+      unit: [ null, [ Validators.required ] ],
       ingredients: [ [], [ Validators.required ] ],
     });
   }
@@ -94,11 +100,14 @@ export class RecipesFormComponent extends BaseResourceFormComponent<Recipe> impl
     const newCarbs = (parseFloat(food.carbohydrates) / foodServing) * newServing;
     const newProteins = (parseFloat(food.proteins) / foodServing) * newServing;
     const newFats = (parseFloat(food.fats) / foodServing) * newServing;
+    const newCalories = (parseFloat(food.calories) / foodServing) * newServing;
     
-    ingredient.food.serving = newValue;
+    ingredient.quantity = newValue;
     ingredient.food.carbohydrates = String(newCarbs);
     ingredient.food.proteins = String(newProteins);
     ingredient.food.fats = String(newFats);
+    ingredient.food.calories = String(newCalories);
+    console.log(this.resource.ingredients);
   }
 
   onSubmitForm(){
@@ -110,5 +119,21 @@ export class RecipesFormComponent extends BaseResourceFormComponent<Recipe> impl
     super.actionsForSuccessLoad(success);
     const foodsIdFromIngredients = this.resource.ingredients.map(x => x.food.id);
     this.form.controls.foodsSelected.setValue(foodsIdFromIngredients);
+  }
+
+  getIngredientCarbs(ingredient: Ingredient){
+    return String(Food.getCarbs(ingredient.food) * parseFloat(ingredient.quantity));
+  }
+
+  getIngredientProteins(ingredient: Ingredient){
+    return String(Food.getProteins(ingredient.food) * parseFloat(ingredient.quantity));
+  }
+
+  getIngredientFats(ingredient: Ingredient){
+    return String(Food.getFats(ingredient.food) * parseFloat(ingredient.quantity));
+  }
+
+  getIngredientCalories(ingredient: Ingredient){
+    return String(Food.getCalories(ingredient.food) * parseFloat(ingredient.quantity));
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Food } from '../../foods/shared/food.model';
@@ -6,14 +6,17 @@ import { Recipe } from '../../recipes/shared/recipe.model';
 import { RecipesService } from '../../recipes/shared/recipes.service';
 import { DailyMeal } from '../shared/daily-meal.model';
 import { MealEntry } from '../shared/meal-entry.model';
+import { UserMealInfoService } from '../shared/meal-info.service';
 import { MealService } from '../shared/meal.service';
+import { SelectedDateService } from '../shared/selected-date.service';
+import { UserMealInfo } from '../shared/user-meal-info.model';
 
 @Component({
   selector: 'app-meals',
   templateUrl: './meals.component.html',
   styleUrls: ['./meals.component.css']
 })
-export class MealsComponent implements OnInit {
+export class MealsComponent implements OnInit, OnDestroy {
 
   date: Date = new Date();
   todayDate: Date = new Date();
@@ -22,6 +25,7 @@ export class MealsComponent implements OnInit {
 
   foods: Food[] = [];
   recipes: Recipe[] = [];
+  userMealInfo: UserMealInfo = new UserMealInfo();
 
   modalForm: FormGroup = new FormGroup({});
   displayModalMeal: boolean = false;
@@ -43,8 +47,10 @@ export class MealsComponent implements OnInit {
   constructor(
     private service: MealService,
     private recipeService: RecipesService,
+    private userMealInfoService: UserMealInfoService,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private dateService: SelectedDateService
   ) { }
 
   /** INITIAL SETUP RELATED */
@@ -54,6 +60,11 @@ export class MealsComponent implements OnInit {
     this.loadTodaysMeal();
     this.loadFoods();
     this.loadRecipes();
+    this.loadUserMealInfo();
+  }
+
+  ngOnDestroy(){
+    this.dateService.selectedDate = this.date;
   }
 
   buildModalForm(){
@@ -70,6 +81,13 @@ export class MealsComponent implements OnInit {
 
   loadTodaysMeal(){
     this.loadMeal(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());
+  }
+
+  loadUserMealInfo(){
+    this.userMealInfoService.loadActiveUserMealInfo().subscribe(
+      success => this.userMealInfo = success,
+      error => console.log('Error loading user meal info: ', error)
+    );
   }
 
   loadMeal(day: number, month: number, year: number){
@@ -191,6 +209,14 @@ export class MealsComponent implements OnInit {
 
   getEntryFats(entry: MealEntry){
     return String(MealEntry.getFats(entry));
+  }
+
+  getEntryCalories(entry: MealEntry){
+    return String(MealEntry.getCalories(entry));
+  }
+
+  getEntryUnit(entry: MealEntry){
+    return MealEntry.getUnit(entry);
   }
   
   /** MODAL PICK DATE RELATED METHODS */
