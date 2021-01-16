@@ -1,1 +1,194 @@
-<p>home works!</p>
+<div class="header bg-gradient-danger pb-4 pt-5 pt-md-8">
+</div>
+<div class="container-fluid mt--5">
+  <div class="row">
+    
+    <div class="col-xl-6">
+      <div class="card shadow">
+        <div class="card-header bg-transparent">
+          <div class="row align-items-center">
+            <div class="col text-center">
+              <h2 style="display: inline;" class="text-uppercase text-muted ls-1 mb-1 text-center">Training</h2>
+              <button routerLink="/routines/{{ activeTrainingRoutine.id }}/edit" style="vertical-align: bottom;" pButton class="p-button-rounded p-button-sm p-button-text float-right" icon="pi pi-pencil"></button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+
+          <div class="row">
+            <div class="col  text-center">
+              <p>
+                Your current training routine is <strong>{{ activeTrainingRoutine.name }}</strong>. <br> Your current goal is <strong>{{ activeTrainingRoutine.goal }}</strong>.
+              </p>
+            </div>
+          </div>
+
+          <div class="row mt-5">
+            <div class="col text-center">
+              <p class="mb-0">Your current training session is: </p>
+              <h3 class="mt-0">{{ currentTrainingSession.description }}</h3>
+            </div>
+          </div>
+
+          <div class="row mt-4 mb-3">
+            <div class="col" style="text-align: center;">
+              <button (click)="nextTrainingSession()" class="p-button-outlined p-button-rounded p-button-help" icon="pi pi-check" pButton label="Done!"></button>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="card-footer">
+          <div class="row mt-3 mb-1">
+            <div class="col" style="text-align: center;">
+              <button routerLink="/routines" pButton class="p-button-outlined p-button-rounded p-button-primary" label="Go to Training Routines page"></button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-xl-6 ">
+      <div class="card shadow">
+        <div class="card-header bg-transparent">
+          <div class="row align-items-center">
+            <div class="col text-center">
+              <h2 style="display: inline;" class="text-uppercase text-muted ls-1 mb-1 text-center">Dieting</h2>
+              <button (click)="showModalDiet()" style="vertical-align: bottom;" pButton class="p-button-rounded p-button-sm p-button-text float-right" icon="pi pi-pencil"></button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+
+          <div class="row">
+            <div class="col text-center">
+              Your daily calories goal are {{ macrosGoal.caloriesCount | imask:imaskConfig }} cal. <br>Today you already got: 
+
+              <div class="progress-wrapper">
+                <div class="progress-info">
+                  <div class="progress-label text-center">
+                    Calories: {{ macrosCurrent.caloriesCount | imask:imaskConfig }} cal.
+                  </div>
+                </div>
+                <div class="progress">
+                  <div class="progress-bar bg-primary" role="progressbar" [style]="caloriesPercent"></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row mt-4 text-center">
+            <div class="col-md-4">
+              <div class="progress-wrapper">
+                <div class="progress-info">
+                  <div class="progress-label text-center">
+                    Carbs: {{ macrosCurrent.carbsCount | imask:imaskConfig }} / {{ macrosGoal.carbsCount | imask:imaskConfig }}g
+                  </div>
+                </div>
+                <div class="progress">
+                  <div class="progress-bar bg-info" role="progressbar" [style]="carbsPercent"></div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-md-4">
+              <div class="progress-wrapper">
+                <div class="progress-info">
+                  <div class="progress-label text-center">
+                    Proteins: {{ macrosCurrent.proteinsCount | imask:imaskConfig }} / {{ macrosGoal.proteinsCount | imask:imaskConfig }}g
+                  </div>
+                </div>
+                <div class="progress">
+                  <div class="progress-bar bg-info" role="progressbar" [style]="proteinsPercent"></div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-4">
+              <div class="progress-wrapper">
+                <div class="progress-info">
+                  <div class="progress-label text-center">
+                    Fats: {{ macrosCurrent.fatsCount | imask:imaskConfig }} / {{ macrosGoal.fatsCount | imask:imaskConfig }}g
+                  </div>
+                </div>
+                <div class="progress">
+                  <div class="progress-bar bg-info" role="progressbar" [style]="fatsPercent"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="card-footer mt-4">
+          <div class="row mt-3 mb-1">
+            <div class="col" style="text-align: center;">
+              <button routerLink="/meals" pButton class="p-button-outlined p-button-rounded p-button-primary" label="Go to Daily Meals page"></button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  
+</div>
+
+
+<p-dialog [(visible)]="displayModalDiet" [modal]="true" [draggable]="false">
+  <p-header>
+    Edit your macros goal &nbsp;
+  </p-header>
+
+  <form [formGroup]="formDiet" (submit)="submitFormDiet()">
+
+    <div class="form-group mb-3">
+      <div class="new-section" style="display: flex; justify-content: center;">
+        <label class="mb-0" for="name">Calories:</label>
+        <div class="new-break"></div>
+        <input formControlName="caloriesCount" class="form-control text-right" [imask]="imaskConfig" type="text" style="max-width: 200px;" />
+        <div class="new-break"></div>
+        <app-form-field-error [form-control]="formDiet.controls.caloriesCount"></app-form-field-error>
+      </div>
+    </div>
+
+    <div class="form-group mb-3">
+      <div class="new-section" style="display: flex; justify-content: center;">
+        <label class="mb-0" for="name">Carbohydrates:</label>
+        <div class="new-break"></div>
+        <input formControlName="carbsCount" class="form-control text-right" [imask]="imaskConfig" type="text" style="max-width: 200px;" />
+        <div class="new-break"></div>
+        <app-form-field-error [form-control]="formDiet.controls.carbsCount"></app-form-field-error>
+      </div>
+    </div>  
+
+    <div class="form-group mb-3">
+      <div class="new-section" style="display: flex; justify-content: center;">
+        <label class="mb-0" for="name">Proteins:</label>
+        <div class="new-break"></div>
+        <input formControlName="proteinsCount" class="form-control text-right" [imask]="imaskConfig" type="text" style="max-width: 200px;" />
+        <div class="new-break"></div>
+        <app-form-field-error [form-control]="formDiet.controls.proteinsCount"></app-form-field-error>
+      </div>
+    </div>
+
+    <div class="form-group mb-3">
+      <div class="new-section" style="display: flex; justify-content: center;">
+        <label class="mb-0" for="name">Fats:</label>
+        <div class="new-break"></div>
+        <input formControlName="fatsCount" class="form-control text-right" [imask]="imaskConfig" type="text" style="max-width: 200px;" />
+        <div class="new-break"></div>
+        <app-form-field-error [form-control]="formDiet.controls.fatsCount"></app-form-field-error>
+      </div>
+    </div>
+  
+    <p-footer>
+      <button pButton type="submit" icon="pi pi-pencil" class="p-button-rounded p-button-sm float-right mb-0 mt-2" label="Edit"></button>
+    </p-footer>
+  </form>
+
+</p-dialog>

@@ -50,4 +50,15 @@ export class RoutineService extends BaseResourceService<TrainingRoutine> {
       map(() => trainingSession )
     );
   }
+
+  updateCurrentTrainingSession(trainingSession: TrainingSession){
+    return this.http.post(`${this.apiURL}/session/next`, trainingSession).pipe(
+      catchError(this.handleError),
+      map(this.jsonToTrainingSession.bind(this))
+    );
+  }
+
+  jsonToTrainingSession(json: any){
+    return TrainingSession.fromJSON(json);
+  }
 }

@@ -91,10 +91,10 @@
                             <tr *ngFor="let entry of meal.mealEntries">
                               <td style="padding: 0 15px 5px 0">{{ entry.food ? entry.food.name : (entry.recipe ? entry.recipe.name : '') }}</td>
                               <td style="padding: 0 75px 5px 0; text-align: center;">{{ entry.quantity }} {{ getEntryUnit(entry) }} </td>
-                              <td style="padding: 0 15px 5px 0; text-align: center;">{{ getEntryCarbs(entry) | imask:imaskConfig }}g</td>
-                              <td style="padding: 0 15px 5px 0; text-align: center;">{{ getEntryProteins(entry) | imask:imaskConfig }}g</td>
-                              <td style="padding: 0 15px 5px 0; text-align: center;">{{ getEntryFats(entry) | imask:imaskConfig }}g</td>
-                              <td style="padding: 0 15px 5px 0; text-align: center;">{{ getEntryCalories(entry) | imask:imaskConfig }}g</td>
+                              <td style="padding: 0 15px 5px 0; text-align: center;">{{ getEntryCarbs(entry) | imask:imaskConfig }} g</td>
+                              <td style="padding: 0 15px 5px 0; text-align: center;">{{ getEntryProteins(entry) | imask:imaskConfig }} g</td>
+                              <td style="padding: 0 15px 5px 0; text-align: center;">{{ getEntryFats(entry) | imask:imaskConfig }} g</td>
+                              <td style="padding: 0 15px 5px 0; text-align: center;">{{ getEntryCalories(entry) | imask:imaskConfig }} cal.</td>
                               <td style="padding: 0 15px 5px 0; text-align: right; align-items: right; justify-content: right; position: relative;;">
                                 <button (click)="showModalMeal(entry, 'edit')" pButton type="button" icon="pi pi-pencil" class="p-button-text p-button-rounded p-button-sm p-button-info"></button>
                                 <button (click)="deleteMealEntry(entry)" pButton type="button" icon="pi pi-times" class="p-button-text p-button-rounded p-button-sm p-button-danger"></button>

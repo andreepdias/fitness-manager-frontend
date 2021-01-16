@@ -5,6 +5,7 @@ export class TrainingRoutine {
     id: number = 0;
     name: string = '';
     description: string = '';
+    goal: string = '';
     weekFrequency: number = 0;
     isActiveRoutine: boolean = false;
     trainingSessions: TrainingSession[] = [];

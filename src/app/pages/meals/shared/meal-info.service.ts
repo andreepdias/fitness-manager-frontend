@@ -2,6 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 import { catchError, map } from 'rxjs/operators';
 import { BaseResourceService } from 'src/app/shared/service/base-resource.service';
+import { MacrosCount } from './macros-count.model';
 import { UserMealInfo } from './user-meal-info.model';
 
 @Injectable({
@@ -27,6 +28,13 @@ export class UserMealInfoService extends BaseResourceService<UserMealInfo>{
     return this.http.post(`${this.apiURL}/${resource.id}/date`, resource, { params }).pipe(
       catchError(this.handleError),
       map(() => resource)
+    );
+  }
+
+  updateMacroGoals(macroGoals: MacrosCount){
+    return this.http.post(`${this.apiURL}/macros/${macroGoals.id}`, macroGoals).pipe(
+      catchError(this.handleError),
+      map(() => macroGoals)
     );
   }
 }

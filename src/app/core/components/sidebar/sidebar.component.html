@@ -32,7 +32,17 @@
             </div>
           </div>
         </div>
-        
+
+        <ul class="navbar-nav">
+          <li class="nav-item">
+              <a routerLink="/home" href="#" routerLinkActive="active" class="nav-link">
+                  <i class="pi pi-home text-bold"></i>
+                  Home
+              </a>
+          </li>
+        </ul>
+
+        <hr class="my-3">        
         <h6 class="navbar-heading text-muted">Training</h6>
         <ul class="navbar-nav">
             <li *ngFor="let menuItem of menuItemsTraining" class="{{menuItem.class}} nav-item">

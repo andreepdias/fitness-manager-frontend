@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { AfterContentChecked, Component, Injector, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { BaseResourceFormComponent } from 'src/app/shared/components/base-resource-form/base-resource-form.component';
@@ -23,7 +24,8 @@ export class RoutinesFormComponent extends BaseResourceFormComponent<TrainingRou
 
   constructor(
     protected injector: Injector,
-    protected service: RoutineService
+    protected service: RoutineService,
+    private location: Location
   ) {
     super(injector, service, new TrainingRoutine(), TrainingRoutine.fromJSON);
   }
@@ -33,6 +35,7 @@ export class RoutinesFormComponent extends BaseResourceFormComponent<TrainingRou
       id: [ null ],
       name: [ null, [ Validators.required ] ],
       description: [ null, [ Validators.required ] ],
+      goal: [ null, [ Validators.required ] ],
       weekFrequency: [ 1, [ Validators.required ] ],
       isActiveRoutine: [ true ],
     });
@@ -68,5 +71,9 @@ export class RoutinesFormComponent extends BaseResourceFormComponent<TrainingRou
     error.error.errors.forEach((message: string) => {
       this.toastr.error(message, 'Deletion failed');
     });
+  }
+
+  goBack(){
+    this.location.back();
   }
 }
