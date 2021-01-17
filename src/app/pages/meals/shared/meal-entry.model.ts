@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from "@angular/core";
 import { Food } from "../../foods/shared/food.model";
 import { Recipe } from "../../recipes/shared/recipe.model";
+import { MacrosCount } from "./macros-count.model";
 
 export class MealEntry {
     id: number = 0;
@@ -8,6 +9,8 @@ export class MealEntry {
     quantity: string = '';
     food?: Food;
     recipe?: Recipe;
+    macrosCount: MacrosCount = new MacrosCount();
+    dailyMealId: number = 0;
 
     static getUnit(entry: MealEntry){
         if(entry.food){

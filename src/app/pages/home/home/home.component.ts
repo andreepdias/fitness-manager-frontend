@@ -130,10 +130,10 @@ export class HomeComponent implements OnInit {
 
   submitFormDiet(){
 
-    this.unformatValue(this.formDiet.value.caloriesCount);
-    this.unformatValue(this.formDiet.value.carbsCount);
-    this.unformatValue(this.formDiet.value.proteinsCount);
-    this.unformatValue(this.formDiet.value.fatsCount);
+    this.formDiet.value.caloriesCount = this.unformatValue(this.formDiet.value.caloriesCount);
+    this.formDiet.value.carbsCount = this.unformatValue(this.formDiet.value.carbsCount);
+    this.formDiet.value.proteinsCount = this.unformatValue(this.formDiet.value.proteinsCount);
+    this.formDiet.value.fatsCount = this.unformatValue(this.formDiet.value.fatsCount);
 
     const macroGoals = Object.assign(new MacrosCount, this.formDiet.value);
 
@@ -148,7 +148,7 @@ export class HomeComponent implements OnInit {
   }
 
   unformatValue(value: any){
-    value.replace(',', '.');
+    return value.replace(',', '.');
   }
 
   successUpdateMacrosGoals(success: any){

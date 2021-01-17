@@ -73,8 +73,10 @@ export class MealsComponent implements OnInit, OnDestroy {
       mealId: [ null ],
       quantity: [ null, [ Validators.required ] ],
       food: [ null ],
-      recipe: [ null ]
-    })
+      recipe: [ null ],
+      macrosCount: [ null ],
+      dailyMealId: [ null ],
+    });
   }
 
   /** REST RELATED METHODS */
@@ -263,25 +265,25 @@ export class MealsComponent implements OnInit, OnDestroy {
   /** SUBMIT FORM */
 
   onSubmitModalForm(){
+    const entry = MealEntry.fromJSON(this.modalForm.value);
+    this.fixEntry(entry);
+    entry.dailyMealId = this.dailyMeal.id;
+
     if(this.modalCurrentAction == 'new'){
-      this.createEntry();
+      this.createEntry(entry);
     }else{
-      this.updateEntry();
+      this.updateEntry(entry);
     }
   }
 
-  createEntry(){
-    const entry = MealEntry.fromJSON(this.modalForm.value);
-    this.fixEntry(entry);
+  createEntry(entry: MealEntry){
     this.service.createEntry(entry).subscribe(
       success => this.actionsForSuccess(success),
       error => this.actionsForError(error)
       );
     }
     
-    updateEntry(){
-      const entry = MealEntry.fromJSON(this.modalForm.value);
-      this.fixEntry(entry);
+    updateEntry(entry: MealEntry){
       this.service.updateEntry(entry).subscribe(
       success => this.actionsForSuccess(success),
       error => this.actionsForError(error)

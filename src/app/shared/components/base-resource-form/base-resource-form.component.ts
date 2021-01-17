@@ -109,6 +109,7 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
   /** HANDLE RESPONSES */
   
   actionsForSuccess(success: any){
+    console.log(success);
     this.showSuccessToast(success);
     this.navigateToParent();
   }
