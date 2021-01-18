@@ -7,6 +7,7 @@ import { RecipesService } from '../../recipes/shared/recipes.service';
 import { DailyMeal } from '../shared/daily-meal.model';
 import { MealEntry } from '../shared/meal-entry.model';
 import { UserMealInfoService } from '../shared/meal-info.service';
+import { Meal } from '../shared/meal.model';
 import { MealService } from '../shared/meal.service';
 import { SelectedDateService } from '../shared/selected-date.service';
 import { UserMealInfo } from '../shared/user-meal-info.model';
@@ -219,6 +220,22 @@ export class MealsComponent implements OnInit, OnDestroy {
 
   getEntryUnit(entry: MealEntry){
     return MealEntry.getUnit(entry);
+  }
+
+  getTotalCarbs(meal: Meal){
+    return String(meal.mealEntries.map(x => MealEntry.getCarbs(x)).reduce((a, b) => a + b));
+  }
+
+  getTotalProteins(meal: Meal){
+    return String(meal.mealEntries.map(x => MealEntry.getProteins(x)).reduce((a, b) => a + b));
+  }
+
+  getTotalFats(meal: Meal){
+    return String(meal.mealEntries.map(x => MealEntry.getFats(x)).reduce((a, b) => a + b));
+  }
+
+  getTotalCalories(meal: Meal){
+    return String(meal.mealEntries.map(x => MealEntry.getCalories(x)).reduce((a, b) => a + b));
   }
   
   /** MODAL PICK DATE RELATED METHODS */

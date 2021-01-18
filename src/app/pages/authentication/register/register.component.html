@@ -23,30 +23,49 @@
               <small>Sign up with new credentials</small>
             </div>
             <form [formGroup]="form" (submit)="submitForm()">
+              
               <div class="form-group">
-                <div class="input-group input-group-alternative mb-3">
+                <div class="input-group input-group-alternative">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
                   </div>
                   <input formControlName="name" class="form-control" placeholder="Name" type="text">
                 </div>
+                <app-form-field-error [form-control]="form.controls.name"></app-form-field-error>
               </div>
+              
               <div class="form-group">
-                <div class="input-group input-group-alternative mb-3">
+                <div class="input-group input-group-alternative">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                   </div>
                   <input formControlName="email" class="form-control" placeholder="Email" type="email">
                 </div>
+                <app-form-field-error [form-control]="form.controls.email"></app-form-field-error>
               </div>
+              
               <div class="form-group">
                 <div class="input-group input-group-alternative">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                   </div>
-                  <input formControlName="password" class="form-control" placeholder="Password" type="password">
+                  <input formControlName="password" class="form-control" placeholder="Simple password (our system is insecure)" type="password">
+                </div>
+                <app-form-field-error [form-control]="form.controls.password"></app-form-field-error>
+              </div>
+
+              <div class="row">
+                <div class="col-md">
+                  <div class="form-group mt-4">
+                    <label for="name">Populate account?</label><br>
+                    <p-checkbox formControlName="populateData" [binary]="true"></p-checkbox> 
+                    I'd like to populate my account wih demo data.
+                    <br>
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (p.s.: all data is written in Portuguese)
+                  </div>
                 </div>
               </div>
+
 
               <div class="row">
                 <div class="col-md-12">

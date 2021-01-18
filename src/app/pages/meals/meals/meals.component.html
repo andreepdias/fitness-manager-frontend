@@ -90,7 +90,7 @@
                           <tbody>
                             <tr *ngFor="let entry of meal.mealEntries">
                               <td style="padding: 0 15px 5px 0">{{ entry.food ? entry.food.name : (entry.recipe ? entry.recipe.name : '') }}</td>
-                              <td style="padding: 0 75px 5px 0; text-align: center;">{{ entry.quantity }} {{ getEntryUnit(entry) }} </td>
+                              <td style="padding: 0 75px 5px 0; text-align: center;">{{ entry.quantity | imask:imaskConfig }} {{ getEntryUnit(entry) }} </td>
                               <td style="padding: 0 15px 5px 0; text-align: center;">{{ getEntryCarbs(entry) | imask:imaskConfig }} g</td>
                               <td style="padding: 0 15px 5px 0; text-align: center;">{{ getEntryProteins(entry) | imask:imaskConfig }} g</td>
                               <td style="padding: 0 15px 5px 0; text-align: center;">{{ getEntryFats(entry) | imask:imaskConfig }} g</td>
@@ -101,6 +101,17 @@
                               </td>
                             </tr>
                           </tbody>
+                          <tfoot>
+                            <tr>
+                              <th style="padding: 0 15px 5px 0">Total:</th>
+                              <th class="text-center"></th>
+                              <th class="text-center">{{ getTotalCarbs(meal) | imask:imaskConfig }} g</th>
+                              <th class="text-center">{{ getTotalProteins(meal) | imask:imaskConfig }} g</th>
+                              <th class="text-center">{{ getTotalFats(meal) | imask:imaskConfig }} g</th>
+                              <th class="text-center">{{ getTotalCalories(meal) | imask:imaskConfig }} cal.</th>
+                              <td class="text-center"></td>
+                            </tr>
+                          </tfoot>
                         </table>
 
                       </div>

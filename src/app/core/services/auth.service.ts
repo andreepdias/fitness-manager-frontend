@@ -44,6 +44,11 @@ export class AuthService {
     localStorage.removeItem('access_token');
   }
 
+  registerWithData(user: User){
+    this.logout();
+    return this.http.post(`${this.apiURL}/populate`, user);
+  }
+
   register(user: User){
     this.logout();
     return this.http.post(this.apiURL, user);
