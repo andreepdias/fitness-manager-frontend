@@ -54,7 +54,12 @@ export class LoginComponent implements OnInit {
 
   failedLogin(error: any){
     console.log('Failure logging in: ', error);
-    this.errorMessages = ['Login attempt failed. Check your credentials and try again.'];
+
+    if(error.error.error_description){
+      this.errorMessages = [error.error.error_description];
+    }else{
+      this.errorMessages = ['Login attempt failed. Server might be down right now. Try again later.'];
+    }
   }
 
 }

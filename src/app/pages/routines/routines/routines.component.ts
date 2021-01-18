@@ -100,11 +100,6 @@ export class RoutinesComponent implements OnInit {
     );
   }
 
-  createRoutine(){
-    this.router.navigateByUrl("/routines/new");
-
-  }
-
   getTagColor(id: number){
     return Exercise.getTagColor(id);
   }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { User } from '../user.model';
 
@@ -17,7 +18,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private service: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -46,15 +48,41 @@ export class RegisterComponent implements OnInit {
   }
 
   successfulRegistration(success: any){
-    this.successMessage = 'Registration done successfully';
     this.errorMessages = [];
 
+    const user = new User(this.form.value.name, this.form.value.email, this.form.value.password);
     this.form.reset();
+    
+    this.service.login(user.email, user.password).subscribe(
+      success => this.successfulLogin(success),
+      error => this.failedLogin(error)
+    );
   }
 
   failedRegistration(error: any){
     this.successMessage = '';
-    this.errorMessages = error.error.errors;
+
+    if(error.error.errors){
+      this.errorMessages = error.error.errors;
+    }else{
+      this.errorMessages = ['Registration failed. Server might be down right now. Try again later.'];
+    }
+  }
+
+  successfulLogin(success: any){
+    const accessToken = JSON.stringify(success);
+    localStorage.setItem('access_token', accessToken);
+    this.router.navigate(['']);
+  }
+
+  failedLogin(error: any){
+    console.log('Failure logging in: ', error);
+
+    if(error.error.error_description){
+      this.errorMessages = [error.error.error_description];
+    }else{
+      this.errorMessages = ['Login attempt failed. Server might be down right now. Try again later.'];
+    }
   }
 
 }

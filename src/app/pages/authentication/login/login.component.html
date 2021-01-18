@@ -18,32 +18,50 @@
         <div class="card bg-secondary shadow border-0">
           
           <div class="card-body px-lg-5 py-lg-5">
-            
-            <div class="text-center text-muted mb-4">
-              <small>Sign in with your credentials</small>
+
+            <div class="row">
+              <div class="col-md">
+                <div class="text-center text-muted mb-4">
+                  <small>Sign in with your credentials</small>
+                </div>
+              </div>
             </div>
 
-            <form [formGroup]="form" (submit)="submitForm()">
-              <div class="form-group mb-3">
-                <div class="input-group input-group-alternative">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+            <div class="row">
+              <div class="col-md">
+                <form [formGroup]="form" (submit)="submitForm()">
+                  <div class="form-group mb-3">
+                    <div class="input-group input-group-alternative">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                      </div>
+                      <input formControlName="email" class="form-control" placeholder="Email" type="email">
+                    </div>
                   </div>
-                  <input formControlName="email" class="form-control" placeholder="Email" type="email">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="input-group input-group-alternative">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                  <div class="form-group">
+                    <div class="input-group input-group-alternative">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                      </div>
+                      <input formControlName="password" class="form-control" placeholder="Password" type="password">
+                    </div>
                   </div>
-                  <input formControlName="password" class="form-control" placeholder="Password" type="password">
-                </div>
+    
+                  <div class="row">
+                    <div class="col-md-12">
+                      <app-server-error-messages [server-error-messages]="errorMessages"></app-server-error-messages>
+    
+                    </div>
+                  </div>
+    
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-primary my-4">Sign in</button>
+                  </div>
+                </form>
               </div>
-              <div class="text-center">
-                <button type="submit" class="btn btn-primary my-4">Sign in</button>
-              </div>
-            </form>
+            </div>
+            
+
 
             <div class="col-12 text-center">
               <small>Don't have an account yet? <a href="#" routerLink="/register" class="text-light"> Register now!</a></small>

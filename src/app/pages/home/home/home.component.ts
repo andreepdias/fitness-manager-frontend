@@ -62,10 +62,13 @@ export class HomeComponent implements OnInit {
   successLoadTrainingRoutine(success: any){
     this.activeTrainingRoutine = success;
 
-    const isCurrentRoutineList = this.activeTrainingRoutine.trainingSessions.filter(x => x.isCurrentSession == true);
-    if(isCurrentRoutineList.length > 0){
-      this.currentTrainingSession = isCurrentRoutineList[0];
+    if(this.activeTrainingRoutine.id){
+      const isCurrentRoutineList = this.activeTrainingRoutine.trainingSessions.filter(x => x.isCurrentSession == true);
+      if(isCurrentRoutineList.length > 0){
+        this.currentTrainingSession = isCurrentRoutineList[0];
+      }
     }
+
   }
 
   loadUserMealInfo(){

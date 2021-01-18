@@ -1,8 +1,11 @@
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md">
         <div *ngIf="serverErrorMessages.length" class="alert alert-danger mt-4">
-            <strong>Submition failed:</strong>
-              <li *ngFor="let error of serverErrorMessages">{{ error }}</li>
+            <strong *ngIf="serverErrorMessages.length > 1">Submition failed:</strong>
+              <div *ngIf="serverErrorMessages.length > 1" >
+                <li *ngFor="let error of serverErrorMessages">{{ error }}</li>
+              </div>
+              <div *ngIf="serverErrorMessages.length == 1">{{ serverErrorMessages[0] }}</div>
           </div>
     </div>
 </div>
