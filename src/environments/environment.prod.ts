@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
 
-  apiURLBase: 'https://dashboard.heroku.com/apps/fitness-manager-andre',
+  apiURLBase: 'https://fitness-manager-andre.herokuapp.com',
   tokenURL: '/oauth/token',
 
   clientId: 'training-diet-frontend-angular-app',
