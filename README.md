@@ -1,4 +1,4 @@
-# FitnessManager
+# Fitness Manager Frontend
 
 Aplicação de gerenciamento de treinos para academia e planejador de refeições com contagem de macro nutrientes (calorias, carboidratos, proteínas e gorduras).
 
