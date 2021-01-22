@@ -2,7 +2,7 @@
 
 Aplicação de gerenciamento de treinos para academia e planejador de refeições com contagem de macro nutrientes (calorias, carboidratos, proteínas e gorduras).
 
-Esta aplicação foi desenvolvida para praticar conhecimentos de Angular e Spring Boot. O backend pode ser encontrado em: https://github.com/andreepdias/fitness-manager-backend
+Esta aplicação foi desenvolvida para praticar conhecimentos de Angular e Spring Boot. O backend pode ser encontrado em: https://github.com/andreepdias/fitness-manager-backend com informações adicionais, como o modelo relacional construído.
 
 O sistema está implantado no GitHub Pages e pode ser acessado por: https://andreepdias.github.io/fitness-manager-frontend.
 OBS.: O backend está hospeado em plano GRATUITO no Heroku, portanto **a primeira requisição pode demorar** (até que a máquina virtural do Heroku seja iniciada).
